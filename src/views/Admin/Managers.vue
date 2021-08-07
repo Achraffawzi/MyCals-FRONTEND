@@ -343,7 +343,7 @@ export default {
     deleteItemConfirm() {
       this.managers.splice(this.editedIndex, 1);
       // API
-      createApiEndPoints(END_POINTS.DELETE_MANAGER + "" + this.editedItem.id)
+      createApiEndPoints(END_POINTS.DELETE_MANAGER_USER + "" + this.editedItem.id)
         .delete()
         .then(response => console.log(response))
         .catch(error => console.log(error));

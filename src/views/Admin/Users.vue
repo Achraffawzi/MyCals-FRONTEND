@@ -74,18 +74,20 @@ export default {
       users: [],
       editedIndex: -1,
       editedItem: {
-        name: "",
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
+        id: 0,
+        firstName: "",
+        lastName: "",
+        date_Of_Birth: "",
+        weight: 0,
+        height: 0,
       },
       defaultItem: {
-        name: "",
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
+        id: 0,
+        firstName: "",
+        lastName: "",
+        date_Of_Birth: "",
+        weight: 0,
+        height: 0,
       },
     };
   },
@@ -132,6 +134,11 @@ export default {
 
     deleteItemConfirm() {
       this.users.splice(this.editedIndex, 1);
+      // API
+      createApiEndPoints(END_POINTS.DELETE_MANAGER_USER + "" + this.editedItem.id)
+        .delete()
+        .then(response => console.log(response))
+        .catch(error => console.log(error));
       this.closeDelete();
     },
 
