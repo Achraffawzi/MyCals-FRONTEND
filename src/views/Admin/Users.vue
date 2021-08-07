@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import { END_POINTS, createApiEndPoints } from "@/api.js";
 export default {
   name: "Users",
   data() {
@@ -62,34 +63,33 @@ export default {
           text: "Firstname",
           align: "start",
           sortable: false,
-          value: "Firstname",
+          value: "firstName",
         },
-        { text: "Lastname", value: "Lastname" },
-        { text: "date of birth", value: "date_of_birth", sortable: false },
-        { text: "Height", value: "Height", sortable: false },
-        { text: "Weight (g)", value: "Weight", sortable: false },
-        { text: "Avatar", value: "Avatar", sortable: false },
+        { text: "Lastname", value: "lastName" },
+        { text: "date of birth", value: "date_Of_Birth", sortable: false },
+        { text: "Height", value: "height", sortable: false },
+        { text: "Weight (g)", value: "weight", sortable: false },
         { text: "Actions", value: "actions", sortable: false },
       ],
       users: [
-        {
-          id_User: 1,
-          Firstname: "Anas",
-          Lastname: "Mellas",
-          date_of_birth: "23/05/2001",
-          Height: 0,
-          Weight: 0,
-          Avatar: "avatar",
-        },
-        {
-          id_User: 2,
-          Firstname: "Jamal",
-          Lastname: "Idaissa",
-          date_of_birth: "23/05/2001",
-          Height: 0,
-          Weight: 0,
-          Avatar: "avatar",
-        },
+        // {
+        //   id_User: 1,
+        //   Firstname: "Anas",
+        //   Lastname: "Mellas",
+        //   date_of_birth: "23/05/2001",
+        //   Height: 0,
+        //   Weight: 0,
+        //   Avatar: "avatar",
+        // },
+        // {
+        //   id_User: 2,
+        //   Firstname: "Jamal",
+        //   Lastname: "Idaissa",
+        //   date_of_birth: "23/05/2001",
+        //   Height: 0,
+        //   Weight: 0,
+        //   Avatar: "avatar",
+        // },
       ],
       editedIndex: -1,
       editedItem: {
@@ -124,7 +124,25 @@ export default {
     },
   },
 
+  // Get all users API
+  mounted() {
+    this.handleFetchUsers();
+  },
+
   methods: {
+
+    handleFetchUsers() {
+      createApiEndPoints(END_POINTS.GET_USERS)
+      .fetch()
+      .then(response => {
+        response.data.forEach(user => {
+          user.date_Of_Birth = user.date_Of_Birth.split('T')[0];
+        })
+        this.users = [...response.data]
+      })
+      .catch(error => console.log(error));
+    },
+
     deleteItem(item) {
       this.editedIndex = this.users.indexOf(item);
       this.editedItem = Object.assign({}, item);
