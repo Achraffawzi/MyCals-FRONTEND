@@ -204,18 +204,26 @@ export default {
       managers: [],
       editedIndex: -1,
       editedItem: {
-        name: "",
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
+        id: 0,
+        FirstName: "",
+        LastName: "",
+        Email: "",
+        Password: "",
+        Gender: "",
+        ConfirmPassword: "",
+        Date_Of_Birth: "",
+        Role: "",
       },
       defaultItem: {
-        name: "",
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
+        id: 0,
+        FirstName: "",
+        LastName: "",
+        Email: "",
+        Password: "",
+        Gender: "",
+        ConfirmPassword: "",
+        Date_Of_Birth: "",
+        Role: "",
       },
       newManager: {
         FirstName: "",
@@ -334,6 +342,11 @@ export default {
 
     deleteItemConfirm() {
       this.managers.splice(this.editedIndex, 1);
+      // API
+      createApiEndPoints(END_POINTS.DELETE_MANAGER + "" + this.editedItem.id)
+        .delete()
+        .then(response => console.log(response))
+        .catch(error => console.log(error));
       this.closeDelete();
     },
 

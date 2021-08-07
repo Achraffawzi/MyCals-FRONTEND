@@ -15,6 +15,7 @@ export const END_POINTS = {
   ADD_REVIEW: "review/add",
   GET_REVIEWS: "review/all",
   DELETE_USER_MANAGER: "manager/users/delete/",
+  DELETE_MANAGER: "admin/u/delete/",
 };
 
 export const authAxois = axios.create({
