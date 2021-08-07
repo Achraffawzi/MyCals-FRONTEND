@@ -32,11 +32,9 @@
           </v-list-item>
         </v-list>
         <!-- Sign out link -->
-        <v-list>
           <v-list-item link >
             <v-list-item-title @click="handleSignout">Sign out</v-list-item-title>
           </v-list-item>
-        </v-list>
       </v-menu>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" class="primary white--text" app>

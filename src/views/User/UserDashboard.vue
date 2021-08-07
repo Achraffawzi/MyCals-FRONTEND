@@ -31,6 +31,10 @@
           >
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
+          <!-- Sign out link -->
+          <v-list-item link>
+            <v-list-item-title>Sign out</v-list-item-title>
+          </v-list-item>
         </v-list>
       </v-menu>
     </v-app-bar>
@@ -85,7 +89,8 @@
 
               <v-card-text>
                 <v-rating
-                  v-model="newRating.rating"
+                  v-model="newRating.Nbr_Stars"
+                  value="newRating.Nbr_Stars"
                   color="primary"
                   hover
                   length="5"
@@ -93,12 +98,12 @@
                 ></v-rating>
                 <v-form ref="opinionForm">
                   <v-text-field 
-                    v-model="newRating.title"
+                    v-model="newRating.Title"
                     label="Title"
                   >
                   </v-text-field>
                   <v-textarea
-                    v-model="newRating.opinion"
+                    v-model="newRating.Text"
                     :rules="opinionRule"
                     label="Opinion"
                   ></v-textarea>
@@ -121,7 +126,7 @@
                   color="primary"
                   text
                   :loading="rateusLoading"
-                  @click="rateApp()"
+                  @click="handleRateApp()"
                 >
                   Share
                 </v-btn>
@@ -137,6 +142,7 @@
 </template>
 
 <script>
+import { END_POINTS, createApiEndPoints } from "@/api.js";
 export default {
   name: "UserDashboard",
   data() {
@@ -146,9 +152,9 @@ export default {
       // Rating data
       Ratingdialog: false,
       newRating: {
-        rating: 0,
-        title: "",
-        opinion: "",
+        Title: "",
+        Text: "",
+        Nbr_Stars: 0,
       },
       rateusLoading: false,
 
@@ -173,10 +179,13 @@ export default {
   },
   methods: {
     // Rating the app functionality
-    rateApp() {
-      if (this.$refs.opinionForm.validate() && this.rating > 0) {
+    handleRateApp() {
+      if (this.$refs.opinionForm.validate() && this.newRating.Nbr_Stars > 0) {
         this.rateusLoading = true;
-        console.log(this.rating + "" + this.opinion);
+        createApiEndPoints(END_POINTS.ADD_REVIEW)
+          .create({...this.newRating})
+          .then(response => console.log(response))
+          .catch(error => console.log(error));
         this.rateusLoading = false;
         this.Ratingdialog = false;
       }
