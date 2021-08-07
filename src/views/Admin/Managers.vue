@@ -292,23 +292,31 @@ export default {
   },
 
   mounted() {
-    createApiEndPoints(END_POINTS.GET_MANAGERS)
+    this.handleFetchManagers();
+  },
+
+  methods: {
+    handleFetchManagers() {
+      createApiEndPoints(END_POINTS.GET_MANAGERS)
       .fetch()
       .then(response => {
         this.managers = [...response.data]
       })
       .catch(error => console.log(error));
-  },
+    },
 
-  methods: {
     handleAddManager() {
       if(this.$refs.formAdd.validate()) {
 
         createApiEndPoints(END_POINTS.ADD_MANAGER)
           .create({...this.newManager})
-          .then(response => {
-            console.log(response);
-            console.log(this.newManager.Email);
+          .then(() => {
+            let addedManager = {
+              firstName: this.newManager.FirstName,
+              lastName: this.newManager.LastName,
+              email: this.newManager.Email,
+            };
+            this.managers.push(addedManager);
           })
           .catch(error => console.log(error));
 
