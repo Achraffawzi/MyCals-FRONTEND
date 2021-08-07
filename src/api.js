@@ -10,7 +10,8 @@ export const END_POINTS = {
   UPDATE_MEAL: "meals/editmeal/",
   GET_MANAGERS: "admin/u/managers",
   ADD_MANAGER: "admin/addmanager",
-  ADD_REVIEW: "review/add"
+  ADD_REVIEW: "review/add",
+  GET_REVIEWS: "review/all",
 };
 
 export const authAxois = axios.create({

@@ -184,10 +184,12 @@ export default {
         this.rateusLoading = true;
         createApiEndPoints(END_POINTS.ADD_REVIEW)
           .create({...this.newRating})
-          .then(response => console.log(response))
+          .then(response => {
+            console.log(response);
+            this.rateusLoading = false;
+            this.Ratingdialog = false;
+          })
           .catch(error => console.log(error));
-        this.rateusLoading = false;
-        this.Ratingdialog = false;
       }
     },
 

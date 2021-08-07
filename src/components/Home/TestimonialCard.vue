@@ -1,5 +1,5 @@
 <template>
-  <div class="testimonial-card">
+  <div class="testimonial-card" v-if="reviews.length > 0">
     <carousel
       :autoplay="false"
       :nav="false"
@@ -8,7 +8,7 @@
         600: { items: 1, nav: false },
       }"
     >
-      <v-card outlined max-width="600" class="mx-auto testimonial__card">
+      <v-card outlined max-width="600" class="mx-auto testimonial__card" v-for="review in reviews" :key="review.id">
         <v-row wrap class="align-items-stretch">
           <v-col cols="12" sm="12" md="4">
             <img
@@ -19,19 +19,13 @@
             <!-- <v-responsive>
             </v-responsive> -->
           </v-col>
-          <v-col cols="12" sm="12" md="8" class="ikhan">
-            <v-card-title class="font-weight-bold">
-              From fast-food addict to mindful eater
-            </v-card-title>
+          <v-col cols="12" sm="12" md="8" class="quote-icon">
+            <v-card-title class="font-weight-bold"> {{ review.title }} </v-card-title>
             <v-card-text>
-              <p>
-                “I naturally fell into the concept of mindful eating… it takes
-                15-20 minutes for the food to hit your stomach, so I started
-                eating slower.”
-              </p>
-              <h3 class="primary--text font-weight-bold">Anna Smith</h3>
+              <p>{{ review.text }}</p>
+              <h3 class="primary--text font-weight-bold">{{review.nameOfAuthor }}</h3>
               <v-rating
-                v-model="rating"
+                v-model="review.nbr_Stars"
                 color="primary"
                 hover
                 length="5"
@@ -47,16 +41,35 @@
 </template>
 
 <script>
+import { END_POINTS, createApiEndPoints } from "@/api.js";
 import carousel from "vue-owl-carousel";
 export default {
   name: "TestimonialCard",
   data() {
     return {
       rating: 4,
+      reviews: [],
     };
   },
   components: {
     carousel,
+  },
+
+  mounted() {
+    this.handleFetchReviews();
+  },
+
+  methods: {
+    handleFetchReviews() {
+      createApiEndPoints(END_POINTS.GET_REVIEWS)
+        .fetch()
+        .then((response) => {
+          console.log(response);
+          this.reviews = [...response.data];
+          console.log(this.reviews[0]);
+        })
+        .catch((error) => console.log(error));
+    },
   },
 };
 </script>
@@ -65,7 +78,7 @@ export default {
 .testimonial__card {
   position: relative;
 
-  .ikhan:after {
+  .quote-icon:after {
     contain: "";
     position: absolute;
     top: 0;

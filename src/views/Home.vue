@@ -41,6 +41,7 @@ import Footer from "@/components/Footer.vue";
 
 export default {
   name: "home",
+
   components: {
     Navbar,
     Banner,
