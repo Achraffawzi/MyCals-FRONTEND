@@ -63,10 +63,8 @@ export default {
     handleFetchReviews() {
       createApiEndPoints(END_POINTS.GET_REVIEWS)
         .fetch()
-        .then((response) => {
-          console.log(response);
+        .then((response) => {;
           this.reviews = [...response.data];
-          console.log(this.reviews[0]);
         })
         .catch((error) => console.log(error));
     },

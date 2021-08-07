@@ -27,6 +27,9 @@
           >
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
+          <v-list-item link @click="handleSignout">
+            <v-list-item-title>Sign out</v-list-item-title>
+          </v-list-item>
         </v-list>
       </v-menu>
     </v-app-bar>
@@ -88,7 +91,6 @@ export default {
     return {
       accountRouteObj: [
         { title: "Settings", route: "/Settings" },
-        { title: "Signout" },
       ],
       searchingUser: "",
       dialog: false,
@@ -204,14 +206,10 @@ export default {
       });
     },
 
-    // save() {
-    //   if (this.editedIndex > -1) {
-    //     Object.assign(this.users[this.editedIndex], this.editedItem);
-    //   } else {
-    //     this.users.push(this.editedItem);
-    //   }
-    //   this.close();
-    // },
+    handleSignout() {
+      localStorage.removeItem('L_T');
+      this.$router.push({ name: "Home" });
+    }
   },
 };
 </script>
