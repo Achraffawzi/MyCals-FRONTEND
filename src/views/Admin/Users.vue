@@ -71,26 +71,7 @@ export default {
         { text: "Weight (g)", value: "weight", sortable: false },
         { text: "Actions", value: "actions", sortable: false },
       ],
-      users: [
-        // {
-        //   id_User: 1,
-        //   Firstname: "Anas",
-        //   Lastname: "Mellas",
-        //   date_of_birth: "23/05/2001",
-        //   Height: 0,
-        //   Weight: 0,
-        //   Avatar: "avatar",
-        // },
-        // {
-        //   id_User: 2,
-        //   Firstname: "Jamal",
-        //   Lastname: "Idaissa",
-        //   date_of_birth: "23/05/2001",
-        //   Height: 0,
-        //   Weight: 0,
-        //   Avatar: "avatar",
-        // },
-      ],
+      users: [],
       editedIndex: -1,
       editedItem: {
         name: "",

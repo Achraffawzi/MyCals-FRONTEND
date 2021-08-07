@@ -81,6 +81,7 @@
 </template>
 
 <script>
+import { END_POINTS, createApiEndPoints } from "@/api.js";
 export default {
   name: "managerDashboard",
   data() {
@@ -97,49 +98,41 @@ export default {
           text: "Firstname",
           align: "start",
           sortable: false,
-          value: "Firstname",
+          value: "firstName",
         },
-        { text: "Lastname", value: "Lastname" },
-        { text: "date of birth", value: "date_of_birth", sortable: false },
-        { text: "Height", value: "Height", sortable: false },
-        { text: "Weight (g)", value: "Weight", sortable: false },
-        { text: "Avatar", value: "Avatar", sortable: false },
+        { text: "Lastname", value: "lastName" },
+        { text: "date of birth", value: "date_Of_Birth", sortable: false },
+        { text: "Height", value: "height", sortable: false },
+        { text: "Weight (g)", value: "weight", sortable: false },
         { text: "Actions", value: "actions", sortable: false },
       ],
-      users: [
-        {
-          id_User: 1,
-          Firstname: "Anas",
-          Lastname: "Mellas",
-          date_of_birth: "23/05/2001",
-          Height: 0,
-          Weight: 0,
-          Avatar: "avatar",
-        },
-        {
-          id_User: 2,
-          Firstname: "Jamal",
-          Lastname: "Idaissa",
-          date_of_birth: "23/05/2001",
-          Height: 0,
-          Weight: 0,
-          Avatar: "avatar",
-        },
-      ],
+      users: [],
       editedIndex: -1,
       editedItem: {
-        name: "",
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
+        id: 0,
+        firstName: "",
+        lastName: "",
+        gender: "",
+        date_Of_Birth: "",
+        email: "",
+        userName: "",
+        role: "User",
+        weight: 0,
+        height: 0,
+        calories_Goal: 0,
       },
       defaultItem: {
-        name: "",
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
+        id: 0,
+        firstName: "",
+        lastName: "",
+        gender: "",
+        date_Of_Birth: "",
+        email: "",
+        userName: "",
+        role: "User",
+        weight: 0,
+        height: 0,
+        calories_Goal: 0,
       },
     };
   },
@@ -159,12 +152,24 @@ export default {
     },
   },
 
+  // Get all users API
+  mounted() {
+    this.handleFetchUsers();
+  },
+
   methods: {
-    // editItem(item) {
-    //   this.editedIndex = this.users.indexOf(item);
-    //   this.editedItem = Object.assign({}, item);
-    //   this.dialog = true;
-    // },
+    
+    handleFetchUsers() {
+      createApiEndPoints(END_POINTS.GET_USERS_MANAGER)
+      .fetch()
+      .then(response => {
+        response.data.forEach(user => {
+          user.date_Of_Birth = user.date_Of_Birth.split('T')[0];
+        })
+        this.users = [...response.data]
+      })
+      .catch(error => console.log(error));
+    },
 
     deleteItem(item) {
       this.editedIndex = this.users.indexOf(item);
@@ -174,6 +179,12 @@ export default {
 
     deleteItemConfirm() {
       this.users.splice(this.editedIndex, 1);
+      // API
+      createApiEndPoints(END_POINTS.DELETE_USER_MANAGER + "" + this.editedItem.id)
+        .delete()
+        .then(response => console.log(response))
+        .catch(error => console.log(error));
+
       this.closeDelete();
     },
 

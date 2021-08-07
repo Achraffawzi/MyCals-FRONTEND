@@ -9,10 +9,12 @@ export const END_POINTS = {
   DELETE_MEAL: "meals/deletemeal/",
   UPDATE_MEAL: "meals/editmeal/",
   GET_USERS: "admin/u/users",
+  GET_USERS_MANAGER: "manager/users/all",
   GET_MANAGERS: "admin/u/managers",
   ADD_MANAGER: "admin/addmanager",
   ADD_REVIEW: "review/add",
   GET_REVIEWS: "review/all",
+  DELETE_USER_MANAGER: "manager/users/delete/",
 };
 
 export const authAxois = axios.create({
