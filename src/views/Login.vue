@@ -122,7 +122,9 @@ export default {
                   location.reload();
                 });
               } else if(response.data.userDisplay.role == "Manager") {
-                this.$router.push({ name: "managerDashboard" });
+                this.$router.push({ name: "managerDashboard" }, () => {
+                  location.reload();
+                });
               } else if(response.data.userDisplay.role == "Admin") {
                 this.$router.push({ name: "AdminDashboardAppStats" }, () => {
                   location.reload();

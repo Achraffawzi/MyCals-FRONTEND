@@ -8,6 +8,9 @@ import UserDashboard from "../views/User/UserDashboard.vue";
 import Meals from "../views/User/Meals.vue";
 import UserStats from "../views/User/UserStats.vue";
 import managerDashboard from "../views/Manager/managerDashboard.vue";
+import Settings from "../views/Manager/Settings.vue";
+import profileSettings from "../views/Manager/profileSettings.vue";
+import accountSettings from "../views/Manager/accountSettings.vue";
 import AdminDashboard from "../views/Admin/AdminDashboard.vue";
 import AppStats from "../views/Admin/AppStats.vue";
 import Users from "../views/Admin/Users.vue";
@@ -57,6 +60,23 @@ const routes = [
     path: "/managerDashboard",
     name: "managerDashboard",
     component: managerDashboard,
+  },
+  {
+    path: "/managerSettings",
+    name: "managerSettings",
+    component: Settings,
+    children: [
+      {
+        path: "profileSettings",
+        name: "profileSettings",
+        component: profileSettings,
+      },
+      {
+        path: "accountSettings",
+        name: "accountSettings",
+        component: accountSettings,
+      }
+    ]
   },
   {
     path: "/AdminDashboard",

@@ -9,14 +9,22 @@
 
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
-          <v-img
-            src="https://source.unsplash.com/random/50x50"
-            max-width="40"
-            class="rounded-circle"
-            style="cursor: pointer"
-            v-bind="attrs"
-            v-on="on"
-          ></v-img>
+          <!-- current logged in User avatar -->
+          <v-avatar v-if="userAvatarSrc != ''">
+            <img
+              :src="userAvatarSrc"
+              max-width="40"
+              class="rounded-circle"
+              style="cursor: pointer"
+              v-bind="attrs"
+              v-on="on"
+            />
+          </v-avatar>
+          <v-avatar v-else color="primary">
+            <span class="white--text text-h5" v-bind="attrs" v-on="on">{{
+              userNameAvatar
+            }}</span>
+          </v-avatar>
         </template>
         <v-list>
           <v-list-item
@@ -84,17 +92,19 @@
 </template>
 
 <script>
-import { END_POINTS, createApiEndPoints } from "@/api.js";
+import { END_POINTS, createApiEndPoints, IMAGE_URL } from "@/api.js";
 export default {
   name: "managerDashboard",
   data() {
     return {
       accountRouteObj: [
-        { title: "Settings", route: "/Settings" },
+        { title: "Settings", route: "/managerSettings" },
       ],
       searchingUser: "",
       dialog: false,
       dialogDelete: false,
+      userAvatarSrc: "",
+      userNameAvatar: "",
       headers: [
         {
           text: "Firstname",
@@ -153,13 +163,31 @@ export default {
       val || this.closeDelete();
     },
   },
-
-  // Get all users API
+  
   mounted() {
-    this.handleFetchUsers();
+    this.handleFetchUsers(); // Get all users API
+    this.getUserAvatar(); // Get the user avatar
   },
 
   methods: {
+
+    // Get User profile pic / Avatar
+    getUserAvatar() {
+      createApiEndPoints(END_POINTS.GET_USER_PROFILE)
+        .fetch()
+        .then((response) => {
+          if (response.data.pictureUser != null) {
+            this.userAvatarSrc = IMAGE_URL + "" + response.data.pictureUser;
+          } else {
+            // Set default avatar
+            this.userNameAvatar =
+              response.data.firstName.charAt(0).toUpperCase() +
+              "" +
+              response.data.lastName.charAt(0).toUpperCase();
+          }
+        })
+        .catch((error) => console.log(error));
+    },
     
     handleFetchUsers() {
       createApiEndPoints(END_POINTS.GET_USERS_MANAGER)
