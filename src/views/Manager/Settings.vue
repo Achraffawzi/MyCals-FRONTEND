@@ -42,8 +42,8 @@
           <v-col cols="12" md="4">
             <!-- title -->
             <h3 class="mb-15 text-h4">Settings</h3>
-            <div v-for="item in items" :key="item.title" class="mb-10">
-              <router-link :to="item.route" class="d-flex align-center">
+            <div v-for="item in items" :key="item.title" class="mb-4">
+              <router-link :to="item.route" class="d-flex align-center pa-2">
                 <v-icon large class="mr-3">{{ item.icon }}</v-icon>
                 <div>
                   <span class="d-block font-weight-bold">{{ item.title }}</span>
@@ -163,3 +163,10 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.router-link-exact-active,
+.router-link-active {
+  background: #ecebeb;
+}
+</style>
