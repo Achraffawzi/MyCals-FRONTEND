@@ -18,7 +18,7 @@
     <v-container>
       <h2 class="primary--text text-center">Sign Up</h2>
       <v-form
-        @submit.prevent="signUpHandle"
+        @submit.prevent="handleSignup"
         method="POST"
         class="d-block mx-auto"
         style="max-width: 400px"
@@ -118,7 +118,7 @@
           depressed
           class="primary my-4 text-capitalize"
           block
-          @click="signUpHandle"
+          @click="handleSignup"
           :loading="signupButtonLoading"
           >Sign up</v-btn
         >
@@ -213,7 +213,7 @@ export default {
   },
 
   methods: {
-    signUpHandle() {
+    handleSignup() {
       this.signupButtonLoading = true;
       if (this.$refs.form.validate()) {
         createApiEndPoints(END_POINTS.AUTH_REGISTER)

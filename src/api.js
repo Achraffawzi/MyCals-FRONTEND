@@ -1,6 +1,8 @@
 import axios from "axios";
 
 export const BASE_URL = "https://localhost:44373/api/";
+export const IMAGE_URL = "https://localhost:44373/images/";
+
 export const END_POINTS = {
   AUTH_LOGIN: "auth/login",
   AUTH_REGISTER: "auth/register/",
@@ -16,7 +18,9 @@ export const END_POINTS = {
   GET_REVIEWS: "review/all",
   DELETE_USER_MANAGER: "manager/users/delete/",
   DELETE_MANAGER_USER: "admin/u/delete/",
+  GET_USER_PROFILE: "profile/authuser",
 };
+
 
 export const authAxois = axios.create({
   BASE_URL: BASE_URL,

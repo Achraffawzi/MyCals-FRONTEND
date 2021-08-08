@@ -13,14 +13,22 @@
 
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
-          <v-img
-            src="https://source.unsplash.com/random/50x50"
-            max-width="40"
-            class="rounded-circle"
-            style="cursor: pointer"
-            v-bind="attrs"
-            v-on="on"
-          ></v-img>
+          <!-- current logged in User avatar -->
+          <v-avatar v-if="userAvatarSrc != ''">
+            <img
+              :src="userAvatarSrc"
+              max-width="40"
+              class="rounded-circle"
+              style="cursor: pointer"
+              v-bind="attrs"
+              v-on="on"
+            />
+          </v-avatar>
+          <v-avatar v-else color="primary">
+            <span class="white--text text-h5" v-bind="attrs" v-on="on">{{
+              userNameAvatar
+            }}</span>
+          </v-avatar>
         </template>
         <v-list>
           <v-list-item
@@ -33,7 +41,9 @@
           </v-list-item>
           <!-- Sign out link -->
           <v-list-item link>
-            <v-list-item-title>Sign out</v-list-item-title>
+            <v-list-item-title @click="handleSignout"
+              >Sign out</v-list-item-title
+            >
           </v-list-item>
         </v-list>
       </v-menu>
@@ -97,10 +107,7 @@
                   size="25"
                 ></v-rating>
                 <v-form ref="opinionForm">
-                  <v-text-field 
-                    v-model="newRating.Title"
-                    label="Title"
-                  >
+                  <v-text-field v-model="newRating.Title" label="Title">
                   </v-text-field>
                   <v-textarea
                     v-model="newRating.Text"
@@ -142,7 +149,7 @@
 </template>
 
 <script>
-import { END_POINTS, createApiEndPoints } from "@/api.js";
+import { END_POINTS, createApiEndPoints, IMAGE_URL } from "@/api.js";
 export default {
   name: "UserDashboard",
   data() {
@@ -157,6 +164,8 @@ export default {
         Nbr_Stars: 0,
       },
       rateusLoading: false,
+      userAvatarSrc: "",
+      userNameAvatar: "",
 
       // Binding All links
       items: [
@@ -167,9 +176,7 @@ export default {
           route: "/userDashboard/UserStats",
         },
       ],
-      accountRouteObj: [
-        { title: "Settings", route: "/Settings" },
-      ],
+      accountRouteObj: [{ title: "Settings", route: "/Settings" }],
       // Rule for description length
       opinionRule: [
         (value) =>
@@ -177,19 +184,25 @@ export default {
       ],
     };
   },
+
+  // Get the user avatar
+  mounted() {
+    this.getUserAvatar();
+  },
+
   methods: {
     // Rating the app functionality
     handleRateApp() {
       if (this.$refs.opinionForm.validate() && this.newRating.Nbr_Stars > 0) {
         this.rateusLoading = true;
         createApiEndPoints(END_POINTS.ADD_REVIEW)
-          .create({...this.newRating})
-          .then(response => {
+          .create({ ...this.newRating })
+          .then((response) => {
             console.log(response);
             this.rateusLoading = false;
             this.Ratingdialog = false;
           })
-          .catch(error => console.log(error));
+          .catch((error) => console.log(error));
       }
     },
 
@@ -197,6 +210,24 @@ export default {
     handleSignout() {
       localStorage.removeItem("L_T");
       this.$router.push({ name: "Home" });
+    },
+
+    // Get User profile pic / Avatar
+    getUserAvatar() {
+      createApiEndPoints(END_POINTS.GET_USER_PROFILE)
+        .fetch()
+        .then((response) => {
+          if (response.data.pictureUser != null) {
+            this.userAvatarSrc = IMAGE_URL + "" + response.data.pictureUser;
+          } else {
+            // Set default avatar
+            this.userNameAvatar =
+              response.data.firstName.charAt(0).toUpperCase() +
+              "" +
+              response.data.lastName.charAt(0).toUpperCase();
+          }
+        })
+        .catch((error) => console.log(error));
     },
   },
 };
