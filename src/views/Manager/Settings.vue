@@ -53,7 +53,7 @@
             </div>
           </v-col>
           <!-- Navigation Content -->
-          <v-col cols="12" md="8">
+          <v-col cols="12" md="7" class="offset-sm-0 offset-md-1">
             <router-view></router-view>
           </v-col>
         </v-row>
