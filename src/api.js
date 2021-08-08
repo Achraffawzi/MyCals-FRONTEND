@@ -20,6 +20,7 @@ export const END_POINTS = {
   DELETE_MANAGER_USER: "admin/u/delete/",
   GET_USER_PROFILE: "profile/authuser",
   CHANGE_PASSWORD: "profile/authuser/changepassword",
+  GET_USER_INFO: "profile/authuser",
 };
 
 
