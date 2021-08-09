@@ -209,7 +209,9 @@ export default {
 
       // Meal Input Rules
       mealNameRule: [
-        (name) => (name.length > 0 && isNaN(name)) || "Meal name is required",
+        (name) =>
+          (name.length > 0 && isNaN(name)) ||
+          "Meal name is required and must be alphabetic or alphanumeric",
       ],
       descriptionRules: [
         (description) => description.length > 0 || "Description is required",
@@ -219,6 +221,7 @@ export default {
           (!isNaN(cals) && cals.length > 0) ||
           "Calories must be a numeric value",
       ],
+      dateRule: [(date) => date.length > 0 || "Date is required"],
 
       // Date picker
       date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
@@ -307,6 +310,7 @@ export default {
 
     close() {
       this.dialog = false;
+      this.$refs.mealsForm.reset();
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
@@ -321,46 +325,49 @@ export default {
       });
     },
     save() {
-      // if (this.$refs.mealsForm.validate()) {
-      if (this.editedIndex > -1) {
-        Object.assign(this.meals[this.editedIndex], this.editedItem);
-        // API
-        let editItem = {
-          Name: this.editedItem.name,
-          Date: this.editedItem.date + "T" + this.editedItem.time,
-          Description: this.editedItem.description,
-          Calories: parseInt(this.editedItem.calories),
-        };
-        createApiEndPoints(
-          END_POINTS.UPDATE_MEAL + "" + this.editedItem.id_Meal
-        )
-          .update({ ...editItem })
-          .then((response) => console.log(response))
-          .catch((error) => console.log(error));
+      if (this.$refs.mealsForm.validate() && this.editedItem.date != "") {
+        if (this.editedIndex > -1) {
+          Object.assign(this.meals[this.editedIndex], this.editedItem);
+          // API
+          let editItem = {
+            Name: this.editedItem.name,
+            Date: this.editedItem.date + "T" + this.editedItem.time,
+            Description: this.editedItem.description,
+            Calories: parseInt(this.editedItem.calories),
+          };
+          createApiEndPoints(
+            END_POINTS.UPDATE_MEAL + "" + this.editedItem.id_Meal
+          )
+            .update({ ...editItem })
+            .then((response) => console.log(response))
+            .catch((error) => console.log(error));
+        } else {
+          this.meals.push(this.editedItem);
+          // Add meal to the database
+          let addedMeal = {
+            Name: this.editedItem.name,
+            Description: this.editedItem.description,
+            Date: this.editedItem.date + "T" + this.editedItem.time,
+            Calories: parseInt(this.editedItem.calories),
+          };
+          // Sending the POST Request
+          createApiEndPoints(END_POINTS.ADD_MEAL)
+            .create({ ...addedMeal })
+            .then((response) => {
+              // Success toolbar
+              this.snackbarSuccess = true;
+              this.snackbarSuccessMessage = response.data;
+            })
+            .catch((error) => console.log(error));
+        }
+        this.close();
       } else {
-        this.meals.push(this.editedItem);
-        // Add meal to the database
-        let addedMeal = {
-          Name: this.editedItem.name,
-          Description: this.editedItem.description,
-          Date: this.editedItem.date + "T" + this.editedItem.time,
-          Calories: parseInt(this.editedItem.calories),
-        };
-        // Sending the POST Request
-        createApiEndPoints(END_POINTS.ADD_MEAL)
-          .create({ ...addedMeal })
-          .then((response) => {
-            // Success toolbar
-            this.snackbarSuccess = true;
-            this.snackbarSuccessMessage = response.data;
-          })
-          .catch((error) => console.log(error));
+        // Error Toolbar
+        this.snackbarError = true;
       }
-      this.close();
-      // } else {
-      //   // Error Toolbar
-      //   this.snackbarError = true;
-      // }
+
+      // reset form
+      this.$refs.mealsForm.reset();
     },
 
     formatDate(date) {

@@ -40,8 +40,10 @@
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
           <!-- Sign out link -->
-          <v-list-item >
-            <v-list-item-title @click="handleSignout">Sign out</v-list-item-title>
+          <v-list-item>
+            <v-list-item-title @click="handleSignout"
+              >Sign out</v-list-item-title
+            >
           </v-list-item>
         </v-list>
       </v-menu>
@@ -115,13 +117,12 @@ export default {
       ],
     };
   },
-  
+
   mounted() {
     this.getUserAvatar(); // Get the user avatar
   },
 
   methods: {
-
     // Get User profile pic / Avatar
     getUserAvatar() {
       createApiEndPoints(END_POINTS.GET_USER_PROFILE)
@@ -140,11 +141,10 @@ export default {
         .catch((error) => console.log(error));
     },
 
-
     handleSignout() {
-      localStorage.removeItem('L_T');
+      localStorage.removeItem("L_T");
       this.$router.push({ name: "Home" });
-    }
-  }
+    },
+  },
 };
 </script>

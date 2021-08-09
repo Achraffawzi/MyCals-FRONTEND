@@ -58,7 +58,7 @@ export default {
       // userNameAvatar: "",
 
       accountRouteObj: [
-        { title: "dashboard", route: "/userDashboard/UserDashboardMeals" }
+        { title: "dashboard", route: "/userDashboard/Meals" }
       ],
 
       // Bindings for the app bar component

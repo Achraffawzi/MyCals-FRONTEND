@@ -1,5 +1,15 @@
 <template>
   <div class="users">
+    <!-- deleting user Snackbar -->
+    <v-snackbar top v-model="snacbarDelete">
+      {{ errorMessage }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="pink" text v-bind="attrs" @click="snacbarDelete = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
     <v-container>
       <!-- Searching for a user -->
       <v-row>
@@ -55,6 +65,9 @@ export default {
   name: "Users",
   data() {
     return {
+      snacbarDelete: false,
+      errorMessage: "",
+
       searchingUser: "",
       dialog: false,
       dialogDelete: false,
@@ -137,7 +150,10 @@ export default {
       // API
       createApiEndPoints(END_POINTS.DELETE_MANAGER_USER + "" + this.editedItem.id)
         .delete()
-        .then(response => console.log(response))
+        .then(response => {
+          this.snacbarDelete = true;
+          this.errorMessage = response.data;
+        })
         .catch(error => console.log(error));
       this.closeDelete();
     },

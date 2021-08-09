@@ -25,6 +25,7 @@ import adminAccountSettings from "../views/Admin/accountSettings.vue";
 Vue.use(VueRouter);
 
 const routes = [
+  // Main routes
   {
     path: "/",
     name: "Home",
@@ -45,6 +46,7 @@ const routes = [
     name: "Signup",
     component: Signup,
   },
+  // User routes
   {
     path: "/UserDashboard",
     name: "UserDashboard",
@@ -79,6 +81,8 @@ const routes = [
       }
     ]
   },
+
+  // Manager route
   {
     path: "/managerDashboard",
     name: "managerDashboard",
@@ -101,6 +105,8 @@ const routes = [
       }
     ]
   },
+
+  // Admin routes
   {
     path: "/AdminDashboard",
     name: "AdminDashboard",

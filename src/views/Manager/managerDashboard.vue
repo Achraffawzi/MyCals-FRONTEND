@@ -1,5 +1,15 @@
 <template>
   <div class="managerDashboard">
+    <!-- deleting user Snackbar -->
+    <v-snackbar top v-model="snacbarDelete">
+      {{ errorMessage }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="pink" text v-bind="attrs" @click="snacbarDelete = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
     <v-app-bar app>
       <v-toolbar-title class="text-uppercase grey--text">
         <span class="">My</span>
@@ -97,8 +107,11 @@ export default {
   name: "managerDashboard",
   data() {
     return {
+      snacbarDelete: false,
+      errorMessage: "",
+
       accountRouteObj: [
-        { title: "Settings", route: "/managerSettings" },
+        { title: "Settings", route: "/managerSettings/profileSettings" },
       ],
       searchingUser: "",
       dialog: false,
@@ -212,7 +225,10 @@ export default {
       // API
       createApiEndPoints(END_POINTS.DELETE_USER_MANAGER + "" + this.editedItem.id)
         .delete()
-        .then(response => console.log(response))
+        .then(response => {
+          this.snacbarDelete = true;
+          this.errorMessage = response.data;
+        })
         .catch(error => console.log(error));
 
       this.closeDelete();

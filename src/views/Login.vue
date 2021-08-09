@@ -114,7 +114,7 @@ export default {
             this.loginButtonLoading = false;
             // Get the token
             if (response.status === 200) {
-              // this.$store.dispatch("getUserCredentials", response.data.userDisplay.token);
+              
               localStorage.setItem("L_T", response.data.userDisplay.token);
               // Get the current logged in user role to redirect to the right dashboard
               if(response.data.userDisplay.role == "User") {

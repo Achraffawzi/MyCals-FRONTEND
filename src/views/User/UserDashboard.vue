@@ -1,5 +1,15 @@
 <template>
   <div class="dashboard">
+    <!-- Error in Adding rating Snackbar -->
+    <v-snackbar top v-model="snackbarRating">
+      {{ errorMessage }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="pink" text v-bind="attrs" @click="snackbarRating = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
     <v-app-bar app>
       <v-app-bar-nav-icon
         class="grey--text"
@@ -107,7 +117,7 @@
                   size="25"
                 ></v-rating>
                 <v-form ref="opinionForm">
-                  <v-text-field v-model="newRating.Title" label="Title">
+                  <v-text-field v-model="newRating.Title" label="Title" :rules="titleRule">
                   </v-text-field>
                   <v-textarea
                     v-model="newRating.Text"
@@ -124,8 +134,7 @@
                 <v-btn
                   color="primary"
                   text
-                  :loading="rateusLoading"
-                  @click="Ratingdialog = false"
+                  @click="close"
                 >
                   Cancel
                 </v-btn>
@@ -164,6 +173,8 @@ export default {
         Nbr_Stars: 0,
       },
       rateusLoading: false,
+      snackbarRating: false,
+      errorMessage: "Operation failed, please verify your rating fields",
       userAvatarSrc: "",
       userNameAvatar: "",
 
@@ -177,6 +188,11 @@ export default {
         },
       ],
       accountRouteObj: [{ title: "Settings", route: "/userSettings/userProfileSettings" }],
+
+      titleRule: [
+        (value) => value.length > 0 || "Title is required",
+      ],
+
       // Rule for description length
       opinionRule: [
         (value) =>
@@ -203,7 +219,14 @@ export default {
             this.Ratingdialog = false;
           })
           .catch((error) => console.log(error));
+      } else {
+        this.snackbarRating = true;
       }
+    },
+
+    close() {
+      this.Ratingdialog = false
+      this.$refs.opinionForm.reset();
     },
 
     // Sign out

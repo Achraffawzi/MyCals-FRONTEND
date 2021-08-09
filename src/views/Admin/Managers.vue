@@ -1,5 +1,15 @@
 <template>
   <div class="managers">
+    <!-- Error in adding a new manager Snackbar -->
+    <v-snackbar top v-model="snacbarAdd">
+      {{ errorMessage }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="pink" text v-bind="attrs" @click="snacbarAdd = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
     <v-container>
       <!-- Searching for a user -->
       <v-row align="center" justify="space-between">
@@ -69,6 +79,7 @@
                             label="Date of birth"
                             v-bind="attrs"
                             v-on="on"
+                            :rules="dobRule"
                           ></v-text-field>
                         </template>
                         <v-date-picker
@@ -135,7 +146,12 @@
 
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" text @click="handleAddManager">
+                <v-btn
+                  color="primary"
+                  text
+                  :loading="loadingAdd"
+                  @click="handleAddManager"
+                >
                   Add
                 </v-btn>
               </v-card-actions>
@@ -186,8 +202,13 @@ export default {
   name: "Managers",
   data() {
     return {
+      snacbarAdd: false,
+      errorMessage: "",
+
       searchingUser: "",
       dialogAdd: false,
+      loadingAdd: false,
+      loader: null,
       dialog: false,
       dialogDelete: false,
       headers: [
@@ -230,7 +251,7 @@ export default {
         LastName: "",
         Email: "",
         Password: "",
-        Gender: "",
+        Gender: "Male",
         ConfirmPassword: "",
         Date_Of_Birth: "",
         Role: "Manager",
@@ -253,18 +274,12 @@ export default {
           return true;
         },
       ],
-      genderRule: [
-        (gender) => gender.value != null || "Please select your gender",
-      ],
-      dobRule: [
-        (dob) =>
-          (dob.value != null && dob.value < new Date()) ||
-          "Please verify the date of birth",
-      ],
+
+      dobRule: [(dob) => dob.length > 0 || "Please verify the date of birth"],
       emailRule: [
         function (email) {
           let emailRegex = new RegExp(
-            "^[a-zA-Z0-9]+((._-)[a-zA-Z0-9]+)?@[a-zA-Z]+.(com|fr|uk|net)$"
+            "^[a-zA-Z0-9]+((.|_|-)[a-zA-Z0-9]+)?@[a-zA-Z]+.(com|fr|uk|net)$"
           );
           if (!emailRegex.test(email)) {
             return "please enter a valid email adresse";
@@ -274,7 +289,7 @@ export default {
       ],
       passwordRule: [
         (password) =>
-          password.length >= 2 ||
+          password.length >= 8 ||
           "Password should be at least 8 characters (numbers, letters and symbols)",
       ],
       ConfirmpasswordRule: [
@@ -297,6 +312,14 @@ export default {
     dialogDelete(val) {
       val || this.closeDelete();
     },
+    loader() {
+      const l = this.loader;
+      this[l] = !this[l];
+
+      setTimeout(() => (this[l] = false), 3000);
+
+      this.loader = null;
+    },
   },
 
   mounted() {
@@ -306,32 +329,36 @@ export default {
   methods: {
     handleFetchManagers() {
       createApiEndPoints(END_POINTS.GET_MANAGERS)
-      .fetch()
-      .then(response => {
-        this.managers = [...response.data]
-      })
-      .catch(error => console.log(error));
+        .fetch()
+        .then((response) => {
+          this.managers = [...response.data];
+        })
+        .catch((error) => console.log(error));
     },
 
     handleAddManager() {
-      if(this.$refs.formAdd.validate()) {
-
+      this.loadingAdd = true;
+      if (this.$refs.formAdd.validate()) {
         createApiEndPoints(END_POINTS.ADD_MANAGER)
-          .create({...this.newManager})
-          .then(() => {
+          .create({ ...this.newManager })
+          .then((response) => {
             let addedManager = {
               firstName: this.newManager.FirstName,
               lastName: this.newManager.LastName,
               email: this.newManager.Email,
             };
             this.managers.push(addedManager);
+            this.snacbarAdd = true;
+            this.errorMessage = response.data;
           })
-          .catch(error => console.log(error));
-
+          .catch((error) => console.log(error));
       } else {
-        console.log("form validation failed");
+        this.snacbarAdd = true;
+        this.errorMessage = "Process failed, please verify form information";
       }
+      this.loadingAdd = false;
       this.dialogAdd = false;
+      this.$refs.formAdd.reset();
     },
 
     deleteItem(item) {
@@ -343,10 +370,15 @@ export default {
     deleteItemConfirm() {
       this.managers.splice(this.editedIndex, 1);
       // API
-      createApiEndPoints(END_POINTS.DELETE_MANAGER_USER + "" + this.editedItem.id)
+      createApiEndPoints(
+        END_POINTS.DELETE_MANAGER_USER + "" + this.editedItem.id
+      )
         .delete()
-        .then(response => console.log(response))
-        .catch(error => console.log(error));
+        .then(() => {
+          this.snacbarAdd = true;
+          this.errorMessage = "Manager has been deleted successfully";
+        })
+        .catch((error) => console.log(error));
       this.closeDelete();
     },
 
