@@ -2,12 +2,12 @@
   <div class="why-component">
     <v-container>
       <v-row wrap>
-        <v-col v-for="why in whys" :key="why.title" cols="12" sm="12" md="4">
+        <v-col v-for="reason in reasons" :key="reason.title" cols="12" sm="12" md="4">
           <div id="hexagon" class="primary white--text">
-            <v-icon class="white--text" large>{{ why.icon }}</v-icon>
+            <v-icon class="white--text" large>{{ reason.icon }}</v-icon>
           </div>
-          <h4 class="text-h4 mb-3">{{ why.title }}</h4>
-          <p class="third--text">{{ why.description }}</p>
+          <h4 class="text-h4 mb-3">{{ reason.title }}</h4>
+          <p class="third--text reason-description">{{ reason.description }}</p>
         </v-col>
       </v-row>
     </v-container>
@@ -19,7 +19,7 @@ export default {
   name: "WhyComponent",
   data() {
     return {
-      whys: [
+      reasons: [
         {
           icon: "school",
           title: "Learn",
@@ -80,5 +80,11 @@ export default {
   border-left: 50px solid transparent;
   border-right: 50px solid transparent;
   border-top: 28.8675px solid #6c63ff;
+}
+
+@media screen and (max-width: 959px) {
+  .reason-description {
+    margin-bottom: 40px !important;
+  }
 }
 </style>
