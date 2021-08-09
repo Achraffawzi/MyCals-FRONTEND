@@ -25,6 +25,12 @@
 <script>
 export default {
   name: "Navbar",
+  data() {
+    return {
+      collapsed: false,
+    }
+  },
+
   methods: {
     toggleNavbar() {
       let navbar = document.querySelector(".nav__links");
@@ -33,17 +39,17 @@ export default {
       if (this.collapsed) {
         lines[0].setAttribute(
           "style",
-          "width: 30px;height: 5px; background: #fff;margin: 5px; transition: all 0.3s ease-in-out;"
+          "width: 30px;height: 2px; margin: 5px; transition: all 0.3s ease-in-out;"
         );
         lines[1].setAttribute(
           "style",
-          "width: 30px;height: 5px; background: #fff;margin: 5px; transition: all 0.3s ease-in-out;"
+          "width: 30px;height: 2px; margin: 5px; transition: all 0.3s ease-in-out;"
         );
         lines[2].setAttribute(
           "style",
-          "width: 30px;height: 5px; background: #fff;margin: 5px; transition: all 0.3s ease-in-out;"
+          "width: 30px;height: 2px; margin: 5px; transition: all 0.3s ease-in-out;"
         );
-        navbar.style.bottom = "100%";
+        navbar.style.height = "0";
 
         this.collapsed = false;
       } else {
@@ -52,9 +58,9 @@ export default {
           "style",
           "opacity:0; -moz-opacity:0; filter:alpha(opacity=0)"
         );
-        lines[2].style.transform = "translateY(-10px) rotate(-225deg)";
+        lines[2].style.transform = "translateY(-5px) rotate(-227deg)";
 
-        navbar.style.bottom = "0";
+        navbar.style.height = "100vh";
         this.collapsed = true;
       }
     },
@@ -63,8 +69,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../scss/variables.scss";
-
 a.router-link-exact-active {
   color: $purple-color !important;
 }
@@ -103,14 +107,15 @@ a.router-link-exact-active {
   .nav__links {
     // display: none !important;
     // background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7), #252837);
-    background-color: $purple-color;
+    background-color: #e2e2e2;
     position: fixed;
     top: 0%;
     left: 0;
+    font-size: 20px;
     right: 0;
-    bottom: 100%;
+    bottom: 0%;
     width: auto;
-    height: auto;
+    height: 0vh;
     z-index: 3;
     display: flex;
     flex-direction: column;
