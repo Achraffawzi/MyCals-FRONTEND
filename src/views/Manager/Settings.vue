@@ -111,7 +111,9 @@ export default {
       // userAvatarSrc: "",
       // userNameAvatar: "",
 
-      accountRouteObj: [],//{ title: "Settings", route: "/managerSettings" }
+      accountRouteObj: [
+        { title: "dashboard", route: "/managerDashboard" }
+      ],//{ title: "Settings", route: "/managerSettings" }
 
       // Bindings for the app bar component
       drawer: false,
@@ -134,27 +136,7 @@ export default {
     };
   },
 
-  // mounted() {
-  //   this.getUserAvatar(); // Get the user avatar
-  // },
-
   methods: {
-    // Get User profile pic / Avatar
-    // getUserAvatar() {
-    //   createApiEndPoints(END_POINTS.GET_USER_PROFILE)
-    //     .fetch()
-    //     .then((response) => {
-    //       if (response.data.pictureUser != null) {
-    //         this.userAvatarSrc = IMAGE_URL + "" + response.data.pictureUser;
-    //       } else {
-    //         // Set default avatar
-    //         this.userNameAvatar =
-    //           response.data.firstName.charAt(0).toUpperCase() +
-    //           "" +
-    //           response.data.lastName.charAt(0).toUpperCase();
-    //       }
-    //     })
-    //     .catch((error) => console.log(error));
     // Sign out functionality
     handleSignout() {
       localStorage.removeItem("L_T");

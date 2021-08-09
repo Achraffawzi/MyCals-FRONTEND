@@ -57,7 +57,9 @@ export default {
       // userAvatarSrc: "",
       // userNameAvatar: "",
 
-      accountRouteObj: [],//{ title: "Settings", route: "/managerSettings" }
+      accountRouteObj: [
+        { title: "dashboard", route: "/AdminDashboard/AdminDashboardAppStats" }
+      ],
 
       // Bindings for the app bar component
       drawer: false,
