@@ -7,7 +7,7 @@
       <v-container>
         <h4 class="text-h4">Why MyCals?</h4>
         <WhyComponent />
-        <router-link :to="startingLink">
+        <router-link class="primary white--text pa-2 rounded" to="startingLink">
           Start your journey now!
         </router-link>
       </v-container>

@@ -45,7 +45,7 @@ export default {
 
 <style lang="scss" scoped>
 .why-component {
-  margin: 60px 0;
+  margin: 60px 0 20px;
 }
 
 #hexagon {
