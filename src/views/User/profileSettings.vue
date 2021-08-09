@@ -125,16 +125,27 @@
                 v-on="on"
               ></v-text-field>
             </template>
-            <v-date-picker v-model="profileInfo.date_Of_Birth" no-title scrollable>
+            <v-date-picker
+              v-model="profileInfo.date_Of_Birth"
+              no-title
+              scrollable
+            >
               <v-spacer></v-spacer>
               <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
-              <v-btn text color="primary" @click="$refs.menu.save(profileInfo.date_Of_Birth)">
+              <v-btn
+                text
+                color="primary"
+                @click="$refs.menu.save(profileInfo.date_Of_Birth)"
+              >
                 OK
               </v-btn>
             </v-date-picker>
           </v-menu>
         </div>
-        <v-btn outlined color="primary" @click="isDobChanging = !isDobChanging"
+        <v-btn
+          outlined
+          color="primary"
+          @click="isDobChanging = !isDobChanging"
           >{{ changeButtonValue(isDobChanging) }}</v-btn
         >
       </div>
@@ -168,6 +179,7 @@
           <v-text-field
             v-model="profileInfo.weight"
             :disabled="!isEmailChanging"
+            :rules="numberRule"
           >
           </v-text-field>
         </div>
@@ -221,7 +233,9 @@
     </div>
     <v-divider></v-divider>
 
-    <v-btn @click="handleEditProfile" class="white--text primary" text>Save changes</v-btn>
+    <v-btn @click="handleEditProfile" class="white--text primary" text
+      >Save changes</v-btn
+    >
   </div>
 </template>
 
@@ -259,30 +273,37 @@ export default {
 
       genders: ["Male", "Female"],
 
-      date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+        .toISOString()
+        .substr(0, 10),
       menu: false,
       modal: false,
+
+      numberRule: [(value) => !isNaN(value) || "Value must be numeric"],
     };
   },
 
-  // Get The Manager Info
+  // Get The User Info
   mounted() {
     createApiEndPoints(END_POINTS.GET_USER_INFO)
       .fetch()
       .then((response) => {
         //   response.data.date_Of_Birth = response.data.date_Of_Birth.split('T')[0];
-        this.profileInfo = { ...response.data, date_Of_Birth: response.data.date_Of_Birth.split('T')[0] };
+        this.profileInfo = {
+          ...response.data,
+          date_Of_Birth: response.data.date_Of_Birth.split("T")[0],
+        };
 
         // Set the user avatar
         if (response.data.pictureUser != null) {
-            this.userAvatarSrc = IMAGE_URL + "" + response.data.pictureUser;
-          } else {
-            // Set default avatar
-            this.userNameAvatar =
-              response.data.firstName.charAt(0).toUpperCase() +
-              "" +
-              response.data.lastName.charAt(0).toUpperCase();
-          }
+          this.userAvatarSrc = IMAGE_URL + "" + response.data.pictureUser;
+        } else {
+          // Set default avatar
+          this.userNameAvatar =
+            response.data.firstName.charAt(0).toUpperCase() +
+            "" +
+            response.data.lastName.charAt(0).toUpperCase();
+        }
       })
       .catch((error) => console.log(error));
 
@@ -290,24 +311,6 @@ export default {
   },
 
   methods: {
-    // Get User profile pic / Avatar
-    // getUserAvatar() {
-    //   createApiEndPoints(END_POINTS.GET_USER_PROFILE)
-    //     .fetch()
-    //     .then((response) => {
-    //       if (response.data.pictureUser != null) {
-    //         this.userAvatarSrc = IMAGE_URL + "" + response.data.pictureUser;
-    //       } else {
-    //         // Set default avatar
-    //         this.userNameAvatar =
-    //           response.data.firstName.charAt(0).toUpperCase() +
-    //           "" +
-    //           response.data.lastName.charAt(0).toUpperCase();
-    //       }
-    //     })
-    //     .catch((error) => console.log(error));
-    // },
-
     setAvatar(event) {
       let file = event.target.files[0];
       let reader = new FileReader();
@@ -330,7 +333,7 @@ export default {
           newAvatar.setAttribute("src", reader.result);
 
           this.profileInfo.pictureUser = reader.result;
-          this.userAvatarSrc = reader.result
+          this.userAvatarSrc = reader.result;
 
           this.userAvatarSrc = reader.result;
         } else {
@@ -347,11 +350,11 @@ export default {
     },
 
     changeButtonValue(prop) {
-          return prop ? "Save" : "Change";
-      },
+      return prop ? "Save" : "Change";
+    },
 
-      handleEditProfile() {
-        let requestBody = {
+    handleEditProfile() {
+      let requestBody = {
         file: this.profileInfo.pictureUser,
         FirstName: this.profileInfo.firstName,
         LastName: this.profileInfo.lastName,
@@ -359,17 +362,17 @@ export default {
         Email: this.profileInfo.email,
         Date_Of_Birth: this.profileInfo.date_Of_Birth,
       };
-        createApiEndPoints(END_POINTS.EDIT_PROFILE)
-          .update({ ...requestBody })
-          .then(response => console.log(response))
-          .catch(error => console.log(error));
-      }
+      createApiEndPoints(END_POINTS.EDIT_PROFILE)
+        .update({ ...requestBody })
+        .then((response) => console.log(response))
+        .catch((error) => console.log(error));
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 input {
-        color: red !important;
-    }
+  color: red !important;
+}
 </style>
