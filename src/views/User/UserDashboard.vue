@@ -35,12 +35,12 @@
             v-for="(item, index) in accountRouteObj"
             :key="index"
             link
-            @click="handleSignout"
+            :to="item.route"
           >
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
           <!-- Sign out link -->
-          <v-list-item link>
+          <v-list-item @click="handleSignout">
             <v-list-item-title @click="handleSignout"
               >Sign out</v-list-item-title
             >
@@ -176,7 +176,7 @@ export default {
           route: "/userDashboard/UserStats",
         },
       ],
-      accountRouteObj: [{ title: "Settings", route: "/Settings" }],
+      accountRouteObj: [{ title: "Settings", route: "/userSettings/userProfileSettings" }],
       // Rule for description length
       opinionRule: [
         (value) =>

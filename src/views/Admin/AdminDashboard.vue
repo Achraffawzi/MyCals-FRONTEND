@@ -111,7 +111,7 @@ export default {
         },
       ],
       accountRouteObj: [
-        { title: "Settings", route: "/adminSettings" },
+        { title: "Settings", route: "/adminSettings/adminProfileSettings" },
       ],
     };
   },

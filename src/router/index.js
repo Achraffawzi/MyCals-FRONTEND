@@ -5,6 +5,9 @@ import About from "../views/About.vue";
 import Login from "../views/Login.vue";
 import Signup from "../views/Signup.vue";
 import UserDashboard from "../views/User/UserDashboard.vue";
+import userSettings from "../views/User/Settings.vue";
+import userProfileSettings from "../views/User/profileSettings.vue";
+import userAccountSettings from "../views/User/accountSettings.vue";
 import Meals from "../views/User/Meals.vue";
 import UserStats from "../views/User/UserStats.vue";
 import managerDashboard from "../views/Manager/managerDashboard.vue";
@@ -58,6 +61,23 @@ const routes = [
         component: UserStats,
       },
     ],
+  },
+  {
+    path: "/userSettings",
+    name: "userSettings",
+    component: userSettings,
+    children: [
+      {
+        path: "userProfileSettings",
+        name: "userProfileSettings",
+        component: userProfileSettings,
+      },
+      {
+        path: "userAccountSettings",
+        name: "userAccountSettings",
+        component: userAccountSettings,
+      }
+    ]
   },
   {
     path: "/managerDashboard",
