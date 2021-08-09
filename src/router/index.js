@@ -15,6 +15,9 @@ import AdminDashboard from "../views/Admin/AdminDashboard.vue";
 import AppStats from "../views/Admin/AppStats.vue";
 import Users from "../views/Admin/Users.vue";
 import Managers from "../views/Admin/Managers.vue";
+import adminSettings from "../views/Admin/Settings.vue";
+import adminProfileSettings from "../views/Admin/profileSettings.vue";
+import adminAccountSettings from "../views/Admin/accountSettings.vue";
 
 Vue.use(VueRouter);
 
@@ -99,6 +102,23 @@ const routes = [
         component: Managers,
       },
     ],
+  },
+  {
+    path: "/adminSettings",
+    name: "adminSettings",
+    component: adminSettings,
+    children: [
+      {
+        path: "adminProfileSettings",
+        name: "adminProfileSettings",
+        component: adminProfileSettings,
+      },
+      {
+        path: "adminAccountSettings",
+        name: "adminAccountSettings",
+        component: adminAccountSettings,
+      }
+    ]
   },
 ];
 

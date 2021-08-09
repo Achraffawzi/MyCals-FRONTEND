@@ -35,14 +35,15 @@
             v-for="(item, index) in accountRouteObj"
             :key="index"
             link
+            :to="item.route"
           >
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
-        </v-list>
-        <!-- Sign out link -->
-          <v-list-item link >
+          <!-- Sign out link -->
+          <v-list-item >
             <v-list-item-title @click="handleSignout">Sign out</v-list-item-title>
           </v-list-item>
+        </v-list>
       </v-menu>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" class="primary white--text" app>
@@ -110,7 +111,7 @@ export default {
         },
       ],
       accountRouteObj: [
-        { title: "Settings", route: "/Settings" },
+        { title: "Settings", route: "/adminSettings" },
       ],
     };
   },

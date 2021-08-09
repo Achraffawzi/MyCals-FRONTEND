@@ -21,6 +21,7 @@ export const END_POINTS = {
   GET_USER_PROFILE: "profile/authuser",
   CHANGE_PASSWORD: "profile/authuser/changepassword",
   GET_USER_INFO: "profile/authuser",
+  EDIT_PROFILE: "profile/authuser/editprofile"
 };
 
 

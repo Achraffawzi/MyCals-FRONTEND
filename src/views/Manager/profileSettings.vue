@@ -207,19 +207,9 @@ export default {
       .then((response) => {
         //   response.data.date_Of_Birth = response.data.date_Of_Birth.split('T')[0];
         this.profileInfo = { ...response.data, date_Of_Birth: response.data.date_Of_Birth.split('T')[0] };
-      })
-      .catch((error) => console.log(error));
 
-    this.getUserAvatar(); // Get the user avatar
-  },
-
-  methods: {
-    // Get User profile pic / Avatar
-    getUserAvatar() {
-      createApiEndPoints(END_POINTS.GET_USER_PROFILE)
-        .fetch()
-        .then((response) => {
-          if (response.data.pictureUser != null) {
+        // Set the user avatar
+        if (response.data.pictureUser != null) {
             this.userAvatarSrc = IMAGE_URL + "" + response.data.pictureUser;
           } else {
             // Set default avatar
@@ -228,9 +218,30 @@ export default {
               "" +
               response.data.lastName.charAt(0).toUpperCase();
           }
-        })
-        .catch((error) => console.log(error));
-    },
+      })
+      .catch((error) => console.log(error));
+
+    // this.getUserAvatar(); // Get the user avatar
+  },
+
+  methods: {
+    // Get User profile pic / Avatar
+    // getUserAvatar() {
+    //   createApiEndPoints(END_POINTS.GET_USER_PROFILE)
+    //     .fetch()
+    //     .then((response) => {
+    //       if (response.data.pictureUser != null) {
+    //         this.userAvatarSrc = IMAGE_URL + "" + response.data.pictureUser;
+    //       } else {
+    //         // Set default avatar
+    //         this.userNameAvatar =
+    //           response.data.firstName.charAt(0).toUpperCase() +
+    //           "" +
+    //           response.data.lastName.charAt(0).toUpperCase();
+    //       }
+    //     })
+    //     .catch((error) => console.log(error));
+    // },
 
     setAvatar(event) {
       let file = event.target.files[0];
@@ -244,7 +255,7 @@ export default {
       // Set src attribut of Image Tag
       reader.addEventListener("load", function () {
         console.log(reader.result);
-        if (this.userAvatarSrc == null) {
+        if (this.userAvatarSrc == null && file) {
           let avatarSpan = document.querySelector("#avatar-span");
           let avatarText = document.querySelector("#avatar-text");
           avatarSpan.style.display = "none";
@@ -253,9 +264,12 @@ export default {
 
           newAvatar.setAttribute("src", reader.result);
 
+          this.profileInfo.pictureUser = reader.result;
+          this.userAvatarSrc = reader.result
+
           this.userAvatarSrc = reader.result;
         } else {
-          // this.userAvatarSrc = reader.result;
+          this.userAvatarSrc = reader.result;
           actualAvatar.setAttribute("src", reader.result);
         }
       });
@@ -272,7 +286,18 @@ export default {
       },
 
       handleEditProfile() {
-
+        let requestBody = {
+        file: this.profileInfo.pictureUser,
+        FirstName: this.profileInfo.firstName,
+        LastName: this.profileInfo.lastName,
+        Gender: this.profileInfo.gender,
+        Email: this.profileInfo.email,
+        Date_Of_Birth: this.profileInfo.date_Of_Birth,
+      };
+        createApiEndPoints(END_POINTS.EDIT_PROFILE)
+          .update({ ...requestBody })
+          .then(response => console.log(response))
+          .catch(error => console.log(error));
       }
   },
 };
