@@ -7,9 +7,10 @@
       <v-container>
         <h4 class="text-h4">Why MyCals?</h4>
         <WhyComponent />
-        <router-link class="primary white--text pa-2 rounded" to="startingLink">
+        <v-btn depressed class="primary white--text font-weight-light banner__intro__button" link to="/Signup">Start Your Journey Now </v-btn>
+        <!-- <router-link class="primary white--text pa-2 rounded" to="/Signup">
           Start your journey now!
-        </router-link>
+        </router-link> -->
       </v-container>
     </section>
     <!-- Testimonial -->
