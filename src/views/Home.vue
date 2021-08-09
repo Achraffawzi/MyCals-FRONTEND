@@ -7,9 +7,9 @@
       <v-container>
         <h4 class="text-h4">Why MyCals?</h4>
         <WhyComponent />
-        <v-btn depressed class="primary font-weight-light">
+        <router-link :to="startingLink">
           Start your journey now!
-        </v-btn>
+        </router-link>
       </v-container>
     </section>
     <!-- Testimonial -->
@@ -49,6 +49,18 @@ export default {
     TestimonialCard,
     Footer,
   },
+
+  data() {
+    return {
+      token: localStorage.getItem('L_T'),
+    }
+  },
+
+  methods: {
+    // getStartingLink() {
+    //   return this.token != null ? ""
+    // }
+  }
 };
 </script>
 

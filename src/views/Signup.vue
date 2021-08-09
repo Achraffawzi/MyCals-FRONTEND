@@ -1,7 +1,7 @@
 <template>
   <div class="signup">
     <!-- Error in signup snackbar -->
-    <v-snackbar v-model="snackbarSignupError">
+    <v-snackbar top v-model="snackbarSignupError">
       {{ errorMessage }}
       <template v-slot:action="{ attrs }">
         <v-btn
@@ -57,14 +57,15 @@
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
-                  v-model="dateFormatted"
+                  v-model="newUser.Date_Of_Birth"
                   label="Date"
                   hint="MM/DD/YYYY format"
                   persistent-hint
                   prepend-icon="mdi-calendar"
                   v-bind="attrs"
-                  @blur="date = parseDate(dateFormatted)"
+                  @blur="date = parseDate(newUser.Date_Of_Birth)"
                   v-on="on"
+                  :rules="dateRule"
                 ></v-text-field>
               </template>
               <v-date-picker
@@ -102,6 +103,12 @@
               v-model="newUser.Password"
               prepend-icon="lock"
               :rules="passwordRule"
+              :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="show1 ? 'text' : 'password'"
+              name="input-10-1"
+              hint="At least 8 characters"
+              counter
+              @click:append="show1 = !show1"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="6">
@@ -110,6 +117,12 @@
               prepend-icon="lock"
               v-model="newUser.ConfirmPassword"
               :rules="confirmPasswordRule"
+              :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="show1 ? 'text' : 'password'"
+              name="input-10-1"
+              hint="At least 8 characters"
+              counter
+              @click:append="show1 = !show1"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -125,7 +138,7 @@
         <p class="text-center">
           Already have an account?
           <router-link to="/Login" class="font-weight-bold primary--text"
-            >Login in</router-link
+            >Log in</router-link
           >
         </p>
       </v-form>
@@ -152,7 +165,7 @@ export default {
         LastName: "",
         Email: "",
         Password: "",
-        Gender: "",
+        Gender: "Male",
         ConfirmPassword: "",
         Date_Of_Birth: "",
         Role: "User",
@@ -169,10 +182,14 @@ export default {
       ),
       menu1: false,
       menu2: false,
+
+      show1: false,
+
+
       emailRule: [
         function (email) {
           let emailRegex = new RegExp(
-            "^[a-zA-Z0-9]+((._-)[a-zA-Z0-9]+)?@(gmail|yahoo|hotmail).(com|fr|uk|net)$"
+            "^[a-zA-Z0-9]+((.|_|-)[a-zA-Z0-9]+)?@(gmail|yahoo|hotmail).(com|fr|uk|net)$"
           );
           if (!emailRegex.test(email)) {
             return "please enter a valid email adresse";
@@ -191,6 +208,7 @@ export default {
           }
         },
       ],
+      dateRule: [(date) => date.length > 0 || "Date of birth is required"],
       confirmPasswordRule: [
         (password) => password == this.newUser.Password || "Password not match",
       ],
@@ -220,7 +238,7 @@ export default {
           .create({ ...this.newUser })
           .then(() => {
             this.signupButtonLoading = false;
-            this.$router.push("Login");
+            this.$router.push({ name: "Login" });
           })
           .catch((error) => console.log(error));
       } else {

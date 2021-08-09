@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <!-- Error in Login Snackbar -->
-    <v-snackbar v-model="loginSnackbar">
+    <v-snackbar top v-model="loginSnackbar">
       {{ errorMessage }}
 
       <template v-slot:action="{ attrs }">
@@ -83,7 +83,7 @@ export default {
       emailRule: [
         function (email) {
           let emailRegex = new RegExp(
-            "^[a-zA-Z0-9]+((._-)[a-zA-Z0-9]+)?@[a-zA-Z]+.(com|fr|uk|net)$"
+            "^[a-zA-Z0-9]+((.|_|-)[a-zA-Z0-9]+)?@[a-zA-Z]+.(com|fr|uk|net)$"
           );
           if (!emailRegex.test(email)) {
             return "please enter a valid email adresse";
@@ -92,7 +92,7 @@ export default {
       ],
       passwordRule: [
         (password) =>
-          password.length >= 1 || "Password must have at least 8 characters",
+          password.length >= 8 || "Password must have at least 8 characters",
       ],
       loginButtonLoading: false,
     };
