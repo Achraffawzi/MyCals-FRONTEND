@@ -24,7 +24,7 @@ export default {
           icon: "school",
           title: "Learn",
           description:
-            "Learn about the essential of diets and nuitrition and how it keeps you healthy and in a good shape",
+            "Learn about the essential of diets and nutrition and how it keeps you healthy and in a good shape",
         },
         {
           icon: "gps_fixed",

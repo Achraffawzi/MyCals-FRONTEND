@@ -2,7 +2,7 @@
     <div class="banner">
         <v-container class="d-flex flex-column align-center justify-center">
             <!-- Title -->
-            <h2 class="text-h2 text-center primary--text  font-weight-bold">About us</h2>
+            <h2 class="text-h2 text-center primary--text  font-weight-bold text-uppercase">About us</h2>
             <!-- Description -->
             <p class="text-center mt-8 font-weight-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo asperiores nihil cupiditate ex culpa nesciunt sed corporis et? Debitis quibusdam et modi id quisquam dicta officia. Provident quas praesentium eum nihil veritatis reprehenderit quis ipsam quia in testing  laudantium, rem nulla, id omnis suscipit accusamus ab dolores optio. Eius amet, odio a quasi culpa blanditiis aperiam. Distinctio accusantium ad culpa enim facere.</p>
         </v-container>
@@ -17,8 +17,9 @@ export default {
 
 <style lang="scss" scoped>
 .banner {
+    color: #fff;
     height: 500px;
-    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(../../assets/about-banner.jpg);
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../assets/about-banner.jpg);
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
