@@ -63,24 +63,7 @@ export default {
     };
   },
 
-  methods: {
-    parseJwt(token) {
-      var base64Url = token.split(".")[1];
-      var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-      var jsonPayload = decodeURIComponent(
-        atob(base64)
-          .split("")
-          .map(function (c) {
-            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-          })
-          .join("")
-      );
-
-      return JSON.parse(jsonPayload);
-    },
-  },
-
-   beforeRouteEnter(to, from, next) {
+  beforeRouteEnter(to, from, next) {
     // Check if there is a token
     let l_t = localStorage.getItem("L_T");
     if (l_t != null) {
@@ -114,7 +97,6 @@ export default {
       next();
     }
   },
-  
 };
 </script>
 
@@ -137,5 +119,3 @@ export default {
   }
 }
 </style>
-
-
