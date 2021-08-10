@@ -24,6 +24,8 @@ import adminSettings from "../views/Admin/Settings.vue";
 import adminProfileSettings from "../views/Admin/profileSettings.vue";
 import adminAccountSettings from "../views/Admin/accountSettings.vue";
 
+import {getUserPath} from '../globalFunctions.js'
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -32,21 +34,78 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
+    beforeEnter: (to, from, next) => {
+      let l_t = localStorage.getItem('L_T');
+      if(l_t != null) {
+
+        let path = getUserPath(l_t);
+
+
+        next({ path: path })
+
+      }
+      else next();
+    },
+    meta: {
+      isSecured: false,
+    }
   },
   {
     path: "/about",
     name: "About",
     component: About,
+    beforeEnter: (to, from, next) => {
+      let l_t = localStorage.getItem('L_T');
+      if(l_t != null) {
+
+        let path = getUserPath(l_t);
+
+        next({ path: path })
+
+      }
+      else next();
+    },
+    meta: {
+      isSecured: false,
+    }
   },
   {
     path: "/login",
     name: "Login",
     component: Login,
+    beforeEnter: (to, from, next) => {
+      let l_t = localStorage.getItem('L_T');
+      if(l_t != null) {
+
+        let path = getUserPath(l_t);
+
+        next({ path: path })
+
+      }
+      else next();
+    },
+    meta: {
+      isSecured: false,
+    }
   },
   {
     path: "/signup",
     name: "Signup",
     component: Signup,
+    beforeEnter: (to, from, next) => {
+      let l_t = localStorage.getItem('L_T');
+      if(l_t != null) {
+
+        let path = getUserPath(l_t);
+
+        next({ path: path })
+
+      }
+      else next();
+    },
+    meta: {
+      isSecured: false,
+    }
   },
   {
     path: "/unauthorized",
@@ -74,6 +133,9 @@ const routes = [
         component: UserStats,
       },
     ],
+    meta: {
+      isSecured: true,
+    }
   },
   {
     path: "/userSettings",
@@ -90,7 +152,10 @@ const routes = [
         name: "userAccountSettings",
         component: userAccountSettings,
       }
-    ]
+    ],
+    meta: {
+      isSecured: true,
+    }
   },
 
   // Manager route
@@ -98,6 +163,9 @@ const routes = [
     path: "/managerDashboard",
     name: "managerDashboard",
     component: managerDashboard,
+    meta: {
+      isSecured: true,
+    }
   },
   {
     path: "/managerSettings",
@@ -114,7 +182,10 @@ const routes = [
         name: "accountSettings",
         component: accountSettings,
       }
-    ]
+    ],
+    meta: {
+      isSecured: true,
+    }
   },
 
   // Admin routes
@@ -139,6 +210,9 @@ const routes = [
         component: Managers,
       },
     ],
+    meta: {
+      isSecured: true,
+    }
   },
   {
     path: "/adminSettings",
@@ -155,7 +229,10 @@ const routes = [
         name: "adminAccountSettings",
         component: adminAccountSettings,
       }
-    ]
+    ],
+    meta: {
+      isSecured: true,
+    }
   },
 ];
 
@@ -163,6 +240,21 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+
+  let token = localStorage.getItem('L_T');
+
+  if(to.meta.isSecured) {
+    if(token != null) {
+      next({ path: getUserPath(token) });
+    } else {
+      next({ name: "unauthorized" });
+    }
+  }
+  else next();
+
 });
 
 export default router;
