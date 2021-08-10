@@ -5,6 +5,7 @@ import About from "../views/About.vue";
 import Login from "../views/Login.vue";
 import Signup from "../views/Signup.vue";
 import Unauthorized from "../views/unauthorized.vue";
+import NotFound from "../views/NotFound.vue";
 import UserDashboard from "../views/User/UserDashboard.vue";
 import userSettings from "../views/User/Settings.vue";
 import userProfileSettings from "../views/User/profileSettings.vue";
@@ -51,6 +52,10 @@ const routes = [
     path: "/unauthorized",
     name: "unauthorized",
     component: Unauthorized,
+  },
+  {
+    path: "*",
+    component: NotFound,
   },
   // User routes
   {
