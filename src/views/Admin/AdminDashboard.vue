@@ -40,7 +40,7 @@
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
           <!-- Sign out link -->
-          <v-list-item>
+          <v-list-item style="cursor: pointer;">
             <v-list-item-title @click="handleSignout"
               >Sign out</v-list-item-title
             >

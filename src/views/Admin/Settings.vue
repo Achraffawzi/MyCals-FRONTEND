@@ -58,7 +58,7 @@ export default {
       // userNameAvatar: "",
 
       accountRouteObj: [
-        { title: "dashboard", route: "/AdminDashboard/AdminDashboardAppStats" }
+        { title: "dashboard", route: "/AdminDashboard/Users" }
       ],
 
       // Bindings for the app bar component

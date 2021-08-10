@@ -8,7 +8,7 @@
             </v-col>
             <v-col cols="12" md="4" :class="[feature.order == 'last' ? 'offset-md-2' : '']">
                 <v-responsive>
-                    <v-img max-width="300" max-height="300" class="mx-auto" :src="feature.image"></v-img>
+                    <v-img class="mx-auto" :src="feature.image"></v-img>
                 </v-responsive>
             </v-col>
         </v-row>

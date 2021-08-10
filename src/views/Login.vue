@@ -132,7 +132,10 @@ export default {
               }
             }
           })
-          .then((error) => console.log(error));
+          .catch(() => {
+            this.loginButtonLoading = false;
+        this.loginSnackbar = true;
+          });
       } else {
         this.loginButtonLoading = false;
         this.loginSnackbar = true;
