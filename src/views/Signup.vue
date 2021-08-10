@@ -14,8 +14,32 @@
         </v-btn>
       </template>
     </v-snackbar>
+
+    <v-alert
+      v-model="alert"
+      dismissible
+      color="primary"
+      border="left"
+      elevation="2"
+      colored-border
+      icon="info"
+    >
+      {{ alertMessage }}
+    </v-alert>
+
     <Navbar />
     <v-container>
+      <v-alert
+      v-model="alert"
+      dismissible
+      :color="setColorState"
+      border="left"
+      elevation="2"
+      colored-border
+      icon="setIconState"
+    >
+      {{ alertMessage }}
+    </v-alert>
       <h2 class="primary--text text-center">Sign Up</h2>
       <v-form
         @submit.prevent="handleSignup"
@@ -158,8 +182,10 @@ export default {
   data(vm) {
     return {
       snackbarSignupError: false,
+      alert: false,
       errorMessage:
         "Registration failed. Please double check your information!",
+        alertMessage: "We have sent you a verification link  to your email account",
       newUser: {
         FirstName: "",
         LastName: "",
@@ -238,7 +264,8 @@ export default {
           .create({ ...this.newUser })
           .then(() => {
             this.signupButtonLoading = false;
-            this.$router.push({ name: "Login" });
+            // this.$router.push({ name: "Login" });
+            this.alert = true;
           })
           .catch((error) => console.log(error));
       } else {

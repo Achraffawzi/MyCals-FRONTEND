@@ -126,11 +126,17 @@ const routes = [
         name: "UserDashboardMeals",
         path: "Meals",
         component: Meals,
+        meta: {
+          isSecured: true,
+        }
       },
       {
         name: "UserDashboardStats",
         path: "UserStats",
         component: UserStats,
+        meta: {
+          isSecured: true,
+        }
       },
     ],
     meta: {
@@ -146,11 +152,17 @@ const routes = [
         path: "userProfileSettings",
         name: "userProfileSettings",
         component: userProfileSettings,
+        meta: {
+          isSecured: true,
+        }
       },
       {
         path: "userAccountSettings",
         name: "userAccountSettings",
         component: userAccountSettings,
+        meta: {
+          isSecured: true,
+        }
       }
     ],
     meta: {
@@ -176,11 +188,17 @@ const routes = [
         path: "profileSettings",
         name: "profileSettings",
         component: profileSettings,
+        meta: {
+          isSecured: true,
+        },
       },
       {
         path: "accountSettings",
         name: "accountSettings",
         component: accountSettings,
+        meta: {
+          isSecured: true,
+        },
       }
     ],
     meta: {
@@ -198,16 +216,25 @@ const routes = [
         name: "AdminDashboardAppStats",
         path: "AppStats",
         component: AppStats,
+        meta: {
+          isSecured: true,
+        }
       },
       {
         name: "AdminDashboardUsers",
         path: "Users",
         component: Users,
+        meta: {
+          isSecured: true,
+        }
       },
       {
         name: "AdminDashboardManagers",
         path: "Managers",
         component: Managers,
+        meta: {
+          isSecured: true,
+        }
       },
     ],
     meta: {
@@ -223,11 +250,17 @@ const routes = [
         path: "adminProfileSettings",
         name: "adminProfileSettings",
         component: adminProfileSettings,
+        meta: {
+          isSecured: true,
+        }
       },
       {
         path: "adminAccountSettings",
         name: "adminAccountSettings",
         component: adminAccountSettings,
+        meta: {
+          isSecured: true,
+        }
       }
     ],
     meta: {
