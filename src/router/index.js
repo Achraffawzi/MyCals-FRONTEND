@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import About from "../views/About.vue";
 import Login from "../views/Login.vue";
 import Signup from "../views/Signup.vue";
+import Unauthorized from "../views/unauthorized.vue";
 import UserDashboard from "../views/User/UserDashboard.vue";
 import userSettings from "../views/User/Settings.vue";
 import userProfileSettings from "../views/User/profileSettings.vue";
@@ -45,6 +46,11 @@ const routes = [
     path: "/signup",
     name: "Signup",
     component: Signup,
+  },
+  {
+    path: "/unauthorized",
+    name: "unauthorized",
+    component: Unauthorized,
   },
   // User routes
   {
