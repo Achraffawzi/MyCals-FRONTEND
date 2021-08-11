@@ -71,6 +71,7 @@ export default {
 <style lang="scss" scoped>
 a.router-link-exact-active {
   color: $purple-color !important;
+  font-weight: bold;
 }
 
 .nav__links > a {
