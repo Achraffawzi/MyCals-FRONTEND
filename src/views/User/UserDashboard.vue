@@ -58,7 +58,7 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-    <v-navigation-drawer v-model="drawer" class="primary white--text" app>
+    <v-navigation-drawer v-model="drawer" class="white--text" app>
       <div
         class="
           subheading
@@ -259,6 +259,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.v-navigation-drawer {
+  background: $dashboard-navigation-drawer-bg !important;
+
+  .v-list .v-list-item--active {
+    background-color:#2F7FAC;
+  }
+}
+
+.v-list--nav {
+    padding-left: 0 ;
+  }
+
+
 .time-picker {
   left: 50%;
   transform: translateX(-50%);
