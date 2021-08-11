@@ -48,7 +48,7 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-    <v-navigation-drawer v-model="drawer" class="white--text elevation-elevation-10" app>
+    <v-navigation-drawer v-model="drawer" class="white--text elevation-10" app>
       <div
         class="
           subheading

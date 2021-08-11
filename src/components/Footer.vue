@@ -1,21 +1,21 @@
 <template>
-  <footer class="primary white--text pt-5">
+  <footer class="white--secondary pt-5">
     <v-container>
       <v-row wrap>
         <v-col cols="12" sm="12" md="6">
           <div class="footer__icons footer__address mb-4">
-            <v-icon class="white--text mr-3">place</v-icon>
+            <v-icon class="secondary--text mr-3">place</v-icon>
             <span class="font-weight-light"
               >21 Revolution street
               <span class="font-weight-bold">Paris, France</span></span
             >
           </div>
           <div class="footer__icons footer__phone mb-4">
-            <v-icon class="white--text mr-3">phone</v-icon>
+            <v-icon class="secondary--text mr-3">phone</v-icon>
             <span class="font-weight-light">+1 555 123456</span>
           </div>
           <div class="footer__icons footer__address mb-4">
-            <v-icon class="white--text mr-3">email</v-icon>
+            <v-icon class="secondary--text mr-3">email</v-icon>
             <span class="font-weight-light">support@company.com</span>
           </div>
         </v-col>
@@ -45,3 +45,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+footer {
+  background-color: #eaedf1;
+}
+</style>

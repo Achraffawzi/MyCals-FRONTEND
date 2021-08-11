@@ -51,7 +51,7 @@ export default {
 #hexagon {
   width: 100px;
   height: 57.735px;
-  background: #6c63ff;
+  background: #2f7fac;
   position: relative;
   margin: auto;
   margin-bottom: 40px;
@@ -68,7 +68,7 @@ export default {
   height: 0;
   border-left: 50px solid transparent;
   border-right: 50px solid transparent;
-  border-bottom: 28.8675px solid #6c63ff;
+  border-bottom: 28.8675px solid #2f7fac;
 }
 #hexagon::after {
   content: "";
@@ -79,7 +79,7 @@ export default {
   height: 0;
   border-left: 50px solid transparent;
   border-right: 50px solid transparent;
-  border-top: 28.8675px solid #6c63ff;
+  border-top: 28.8675px solid #2f7fac;
 }
 
 @media screen and (max-width: 959px) {
