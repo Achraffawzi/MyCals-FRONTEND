@@ -33,7 +33,7 @@
             ></v-text-field>
           </v-col>
           <v-col cols="12">
-            <v-btn depressed text class="primary white--text"
+            <v-btn depressed text class="primary white--text" @click="handleResetPassword"
               >Reset Password</v-btn
             >
           </v-col>
@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import { END_POINTS, createApiEndPoints } from "@/api.js";
 export default {
   name: "ResetPassword",
   data() {
@@ -63,5 +64,26 @@ export default {
       ],
     };
   },
+
+  methods: {
+    handleResetPassword() {
+      let url = window.location.href;
+      let queryString = url.split("?")[1];
+      let paramOne = queryString.split("&")[0].split("=")[1].replace("%40", "@");
+      let paramTwo = queryString.split("&")[1].split("=")[1];
+      let params = {
+        email: paramOne,
+        token: paramTwo,
+        Password: this.NewPassword,
+        ConfirmPassword: this.ConfirmNewPassword,
+      };
+      createApiEndPoints(END_POINTS.AUTH_RESET_PASSWORD)
+        .update({ ...params })
+        .then(response => {
+          if(response.status === 200) this.$router.push({ name: "Login" });
+        })
+        .catch(error => console.log(error));
+    }
+  }
 };
 </script>

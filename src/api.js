@@ -7,6 +7,8 @@ export const END_POINTS = {
   AUTH_LOGIN: "auth/login",
   AUTH_REGISTER: "auth/register/",
   AUTH_CONFIRM_EMAIL: "auth/confirmemail",
+  AUTH_FORGET_PASSWORD: "auth/forgetpassword",
+  AUTH_RESET_PASSWORD: "auth/restpassword",
   USER_MEALS: "meals/mymeals",
   ADD_MEAL: "meals/addmeal",
   DELETE_MEAL: "meals/deletemeal/",

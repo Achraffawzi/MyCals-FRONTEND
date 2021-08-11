@@ -11,6 +11,20 @@
       </template>
     </v-snackbar>
     <Navbar />
+    <!-- Alert forget password -->
+    <v-container>
+      <v-alert
+      v-model="alert"
+      dismissible
+      color="primary"
+      border="left"
+      elevation="2"
+      colored-border
+      icon="info"
+    >
+      {{ alertMessage }}
+    </v-alert>
+    </v-container>
     <v-container>
       <h2 class="primary--text text-center">Log in</h2>
       <v-form
@@ -37,9 +51,33 @@
           counter
           @click:append="show1 = !show1"
         ></v-text-field>
-        <router-link :to='{ name: "ResetPassword" }' class="font-weight-bold"
-          >Forgot password?</router-link
-        >
+
+        <v-dialog v-model="dialog" width="500">
+          <template v-slot:activator="{ on, attrs }">
+            <span  @click="dialog = true;" class="font-weight-bold d-block primary--text" v-bind="attrs" v-on="on"
+          >Forgot password?</span>
+          </template>
+
+          <v-card>
+            <v-card-title class="text-h5 text-center d-block primary--text">
+              Forgot password
+            </v-card-title>
+
+            <v-card-text>
+              <v-text-field label="Email" v-model="email" prepend-icon="email" :rules="emailRule"></v-text-field>
+            </v-card-text>
+
+            <v-divider></v-divider>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn depressed text class="primary white--text" @click="handleForgetPassword">
+                Send
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
         <v-btn
           depressed
           class="primary my-4 text-capitalize"
@@ -71,11 +109,15 @@ export default {
   data() {
     return {
       loginSnackbar: false,
+      email: "",
+      alert: false,
+      alertMessage: "",
       errorMessage: "Login failed, please verify your information",
       show1: false,
       show2: true,
       show3: false,
       show4: false,
+      dialog: false,
       loggedinUser: {
         Email: "",
         Password: "",
@@ -114,18 +156,17 @@ export default {
             this.loginButtonLoading = false;
             // Get the token
             if (response.status === 200) {
-              
               localStorage.setItem("L_T", response.data.userDisplay.token);
               // Get the current logged in user role to redirect to the right dashboard
-              if(response.data.userDisplay.role == "User") {
+              if (response.data.userDisplay.role == "User") {
                 this.$router.push({ name: "UserDashboardMeals" }, () => {
                   location.reload();
                 });
-              } else if(response.data.userDisplay.role == "Manager") {
+              } else if (response.data.userDisplay.role == "Manager") {
                 this.$router.push({ name: "managerDashboard" }, () => {
                   location.reload();
                 });
-              } else if(response.data.userDisplay.role == "Admin") {
+              } else if (response.data.userDisplay.role == "Admin") {
                 this.$router.push({ name: "AdminDashboardAppStats" }, () => {
                   location.reload();
                 });
@@ -134,13 +175,24 @@ export default {
           })
           .catch(() => {
             this.loginButtonLoading = false;
-        this.loginSnackbar = true;
+            this.loginSnackbar = true;
           });
       } else {
         this.loginButtonLoading = false;
         this.loginSnackbar = true;
       }
     },
+    handleForgetPassword() {
+      this.alert = true;
+      createApiEndPoints(END_POINTS.AUTH_FORGET_PASSWORD)
+        .create({ email: this.email })
+        .then(response => {
+          this.alertMessage = response.data;
+        })
+        .catch(error => console.log(error))
+
+      this.dialog = false;
+    }
   },
 };
 </script>
