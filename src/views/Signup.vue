@@ -17,7 +17,6 @@
 
     <Navbar />
     <v-container>
-      <h2 class="primary--text text-center mb-4">Sign Up</h2>
       <v-form
         @submit.prevent="handleSignup"
         method="POST"
@@ -25,20 +24,21 @@
         style="max-width: 400px"
         ref="form"
       >
+        <div v-if="alert">
+          <v-alert
+            v-model="alert"
+            dismissible
+            color="primary"
+            border="left"
+            elevation="2"
+            colored-border
+            icon="info"
+          >
+            {{ alertMessage }}
+          </v-alert>
+        </div>
+        <h2 class="primary--text text-center mb-4">Sign Up</h2>
         <v-row>
-          <v-col cols="12" v-if="alert">
-            <v-alert
-              v-model="alert"
-              dismissible
-              color="primary"
-              border="left"
-              elevation="2"
-              colored-border
-              icon="info"
-            >
-              {{ alertMessage }}
-            </v-alert>
-          </v-col>
           <v-col cols="12" md="6">
             <v-text-field
               label="Firstname"

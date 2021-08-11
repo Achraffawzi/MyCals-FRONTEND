@@ -11,28 +11,29 @@
       </template>
     </v-snackbar>
     <Navbar />
-    <!-- Alert forget password -->
+
     <v-container>
-      <v-alert
-      v-model="alert"
-      dismissible
-      color="primary"
-      border="left"
-      elevation="2"
-      colored-border
-      icon="info"
-    >
-      {{ alertMessage }}
-    </v-alert>
-    </v-container>
-    <v-container>
-      <h2 class="primary--text text-center">Log in</h2>
       <v-form
         ref="loginForm"
         @submit.prevent="handleLogin"
         class="d-block mx-auto"
         style="max-width: 400px"
       >
+        <!-- Alert forget password -->
+        <div v-if="alert">
+          <v-alert
+            v-model="alert"
+            dismissible
+            color="primary"
+            border="left"
+            elevation="2"
+            colored-border
+            icon="info"
+          >
+            {{ alertMessage }}
+          </v-alert>
+        </div>
+        <h2 class="primary--text text-center">Log in</h2>
         <v-text-field
           label="Email"
           v-model="loggedinUser.Email"
@@ -54,8 +55,13 @@
 
         <v-dialog v-model="dialog" width="500">
           <template v-slot:activator="{ on, attrs }">
-            <span  @click="dialog = true;" class="font-weight-bold d-block primary--text" v-bind="attrs" v-on="on"
-          >Forgot password?</span>
+            <span
+              @click="dialog = true"
+              class="font-weight-bold d-block primary--text"
+              v-bind="attrs"
+              v-on="on"
+              >Forgot password?</span
+            >
           </template>
 
           <v-card>
@@ -64,14 +70,27 @@
             </v-card-title>
 
             <v-card-text>
-              <v-text-field label="Email" v-model="email" prepend-icon="email" :rules="emailRule"></v-text-field>
+              <v-form ref="forgotPasswordForm">
+                <v-text-field
+                  label="Email"
+                  v-model="email"
+                  prepend-icon="email"
+                  :rules="emailRule"
+                ></v-text-field>
+              </v-form>
             </v-card-text>
 
             <v-divider></v-divider>
 
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn depressed text class="primary white--text" @click="handleForgetPassword">
+              <v-btn
+                depressed
+                text
+                class="primary white--text"
+                :loading="forgotPasswordLoadingButton"
+                @click="handleForgetPassword"
+              >
                 Send
               </v-btn>
             </v-card-actions>
@@ -112,6 +131,8 @@ export default {
       email: "",
       alert: false,
       alertMessage: "",
+      forgotPasswordLoadingButton: false,
+      loader: null,
       errorMessage: "Login failed, please verify your information",
       show1: false,
       show2: true,
@@ -130,6 +151,7 @@ export default {
           if (!emailRegex.test(email)) {
             return "please enter a valid email adresse";
           }
+          return true;
         },
       ],
       passwordRule: [
@@ -143,6 +165,17 @@ export default {
   computed: {
     getCredentials() {
       return this.$store.state.currentToken;
+    },
+  },
+
+  watch: {
+    loader() {
+      const l = this.loader;
+      this[l] = !this[l];
+
+      setTimeout(() => (this[l] = false), 3000);
+
+      this.loader = null;
     },
   },
 
@@ -183,16 +216,22 @@ export default {
       }
     },
     handleForgetPassword() {
-      this.alert = true;
-      createApiEndPoints(END_POINTS.AUTH_FORGET_PASSWORD)
-        .create({ email: this.email })
-        .then(response => {
-          this.alertMessage = response.data;
-        })
-        .catch(error => console.log(error))
-
-      this.dialog = false;
-    }
+      this.forgotPasswordLoadingButton = true;
+      if (this.$refs.forgotPasswordForm.validate()) {
+        createApiEndPoints(END_POINTS.AUTH_FORGET_PASSWORD)
+          .create({ email: this.email })
+          .then((response) => {
+            this.dialog = false;
+            this.alert = true;
+            this.alertMessage = response.data;
+          })
+          .catch((error) => console.log(error));
+      } else {
+        this.loginSnackbar = true;
+        this.errorMessage = "please enter your email";
+      }
+      this.forgotPasswordLoadingButton = false;
+    },
   },
 };
 </script>
