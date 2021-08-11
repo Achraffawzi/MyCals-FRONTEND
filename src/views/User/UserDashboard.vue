@@ -153,7 +153,9 @@
       </v-list>
     </v-navigation-drawer>
 
-    <router-view></router-view>
+    <transition name="dashboardTransition" mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -260,5 +262,113 @@ export default {
 .time-picker {
   left: 50%;
   transform: translateX(-50%);
+}
+.dashboardTransition-enter-active {
+  animation: route-enter .56s;
+  opacity: 0;
+  animation-delay: .1s;
+}
+
+.dashboardTransition-leave-active {
+  animation: route-leave .56s;
+}
+
+@keyframes route-enter {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  } to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes route-leave {
+  from {
+    transform: translateX(0);
+  } to {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+}
+
+// Chrome
+@-webkit-keyframes route-enter {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  } to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes route-leave {
+  from {
+    transform: translateX(0);
+  } to {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+}
+
+// Mozilla
+@-moz-keyframes route-enter {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  } to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes route-leave {
+  from {
+    transform: translateX(0);
+  } to {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+}
+
+// Opera
+@-o-keyframes route-enter {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  } to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@-o-keyframes route-leave {
+  from {
+    transform: translateX(0);
+  } to {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+}
+
+// IE
+@-ms-keyframes route-enter {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  } to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@-ms-keyframes route-leave {
+  from {
+    transform: translateX(0);
+  } to {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
 }
 </style>
