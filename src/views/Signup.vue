@@ -15,32 +15,9 @@
       </template>
     </v-snackbar>
 
-    <v-alert
-      v-model="alert"
-      dismissible
-      color="primary"
-      border="left"
-      elevation="2"
-      colored-border
-      icon="info"
-    >
-      {{ alertMessage }}
-    </v-alert>
-
     <Navbar />
     <v-container>
-      <v-alert
-      v-model="alert"
-      dismissible
-      :color="setColorState"
-      border="left"
-      elevation="2"
-      colored-border
-      icon="setIconState"
-    >
-      {{ alertMessage }}
-    </v-alert>
-      <h2 class="primary--text text-center">Sign Up</h2>
+      <h2 class="primary--text text-center mb-4">Sign Up</h2>
       <v-form
         @submit.prevent="handleSignup"
         method="POST"
@@ -49,6 +26,19 @@
         ref="form"
       >
         <v-row>
+          <v-col cols="12" v-if="alert">
+            <v-alert
+              v-model="alert"
+              dismissible
+              color="primary"
+              border="left"
+              elevation="2"
+              colored-border
+              icon="info"
+            >
+              {{ alertMessage }}
+            </v-alert>
+          </v-col>
           <v-col cols="12" md="6">
             <v-text-field
               label="Firstname"
@@ -185,7 +175,8 @@ export default {
       alert: false,
       errorMessage:
         "Registration failed. Please double check your information!",
-        alertMessage: "We have sent you a verification link  to your email account",
+      alertMessage:
+        "We have sent you a verification link  to your email account",
       newUser: {
         FirstName: "",
         LastName: "",
@@ -210,7 +201,6 @@ export default {
       menu2: false,
 
       show1: false,
-
 
       emailRule: [
         function (email) {

@@ -1,21 +1,26 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+
 import Home from "../views/Home.vue";
 import About from "../views/About.vue";
 import Login from "../views/Login.vue";
 import Signup from "../views/Signup.vue";
+
 import Unauthorized from "../views/unauthorized.vue";
 import NotFound from "../views/NotFound.vue";
+
 import UserDashboard from "../views/User/UserDashboard.vue";
 import userSettings from "../views/User/Settings.vue";
-import userProfileSettings from "../views/User/profileSettings.vue";
-import userAccountSettings from "../views/User/accountSettings.vue";
 import Meals from "../views/User/Meals.vue";
 import UserStats from "../views/User/UserStats.vue";
+import userProfileSettings from "../views/User/profileSettings.vue";
+import userAccountSettings from "../views/User/accountSettings.vue";
+
 import managerDashboard from "../views/Manager/managerDashboard.vue";
 import Settings from "../views/Manager/Settings.vue";
 import profileSettings from "../views/Manager/profileSettings.vue";
 import accountSettings from "../views/Manager/accountSettings.vue";
+
 import AdminDashboard from "../views/Admin/AdminDashboard.vue";
 import AppStats from "../views/Admin/AppStats.vue";
 import Users from "../views/Admin/Users.vue";
@@ -23,6 +28,7 @@ import Managers from "../views/Admin/Managers.vue";
 import adminSettings from "../views/Admin/Settings.vue";
 import adminProfileSettings from "../views/Admin/profileSettings.vue";
 import adminAccountSettings from "../views/Admin/accountSettings.vue";
+
 import AuthMailConfirmation from "../views/AuthMailConfirmation.vue";
 import ResetPassword from "../views/ResetPassword.vue";
 

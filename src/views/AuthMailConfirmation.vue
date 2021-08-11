@@ -2,10 +2,10 @@
   <div class="auth-email-confirmation">
     <v-container>
       <v-responsive>
-        <v-img src="../assets/mailbox.svg"></v-img>
+        <v-img src="../assets/mailbox.svg" max-width="550" class="mx-auto"></v-img>
       </v-responsive>
-      <p>{{ confirmationMessage }}</p>
-      <div v-if="confirmationMessage !== 'not confirmed'">
+      <p class="third--text text-center py-4">{{ confirmationMessage }}</p>
+      <div class="text-center" v-if="confirmationMessage !== 'not confirmed'">
         <v-btn class="primary white--text" link :to="{ name: 'Login' }">Go To Login Page</v-btn>
       </div>
     </v-container>
