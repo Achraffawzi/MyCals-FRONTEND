@@ -21,14 +21,14 @@
           >
           </v-text-field>
         </v-col>
-        <v-col cols="12" sm="6" lg="4">
+        <v-col cols="12" sm="6" lg="4" class="d-flex">
           <v-dialog
             v-model="dialogAdd"
             width="500"
             class="d-inline-block ml-auto"
           >
             <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" dark v-bind="attrs" v-on="on">
+              <v-btn color="primary" dark v-bind="attrs" v-on="on" class="ml-auto">
                 New Manager
               </v-btn>
             </template>

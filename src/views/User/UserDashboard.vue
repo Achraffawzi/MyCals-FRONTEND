@@ -117,7 +117,11 @@
                   size="25"
                 ></v-rating>
                 <v-form ref="opinionForm">
-                  <v-text-field v-model="newRating.Title" label="Title" :rules="titleRule">
+                  <v-text-field
+                    v-model="newRating.Title"
+                    label="Title"
+                    :rules="titleRule"
+                  >
                   </v-text-field>
                   <v-textarea
                     v-model="newRating.Text"
@@ -131,13 +135,7 @@
 
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn
-                  color="primary"
-                  text
-                  @click="close"
-                >
-                  Cancel
-                </v-btn>
+                <v-btn color="primary" text @click="close"> Cancel </v-btn>
                 <v-btn
                   color="primary"
                   text
@@ -189,11 +187,11 @@ export default {
           route: "/userDashboard/UserStats",
         },
       ],
-      accountRouteObj: [{ title: "Settings", route: "/userSettings/userProfileSettings" }],
-
-      titleRule: [
-        (value) => value.length > 0 || "Title is required",
+      accountRouteObj: [
+        { title: "Settings", route: "/userSettings/userProfileSettings" },
       ],
+
+      titleRule: [(value) => value.length > 0 || "Title is required"],
 
       // Rule for description length
       opinionRule: [
@@ -227,7 +225,7 @@ export default {
     },
 
     close() {
-      this.Ratingdialog = false
+      this.Ratingdialog = false;
       this.$refs.opinionForm.reset();
     },
 
@@ -263,34 +261,34 @@ export default {
   background: $dashboard-navigation-drawer-bg !important;
 
   .v-list .v-list-item--active {
-    background-color:#2F7FAC;
+    background-color: #2f7fac;
   }
 }
 
 .v-list--nav {
-    padding-left: 0 ;
-  }
-
+  padding-left: 0;
+}
 
 .time-picker {
   left: 50%;
   transform: translateX(-50%);
 }
 .dashboardTransition-enter-active {
-  animation: route-enter .56s;
+  animation: route-enter 0.56s;
   opacity: 0;
-  animation-delay: .1s;
+  animation-delay: 0.1s;
 }
 
 .dashboardTransition-leave-active {
-  animation: route-leave .56s;
+  animation: route-leave 0.56s;
 }
 
 @keyframes route-enter {
   from {
     transform: translateX(-30px);
     opacity: 0;
-  } to {
+  }
+  to {
     transform: translateX(0);
     opacity: 1;
   }
@@ -299,7 +297,8 @@ export default {
 @keyframes route-leave {
   from {
     transform: translateX(0);
-  } to {
+  }
+  to {
     transform: translateX(-30px);
     opacity: 0;
   }
@@ -310,7 +309,8 @@ export default {
   from {
     transform: translateX(-30px);
     opacity: 0;
-  } to {
+  }
+  to {
     transform: translateX(0);
     opacity: 1;
   }
@@ -319,7 +319,8 @@ export default {
 @-webkit-keyframes route-leave {
   from {
     transform: translateX(0);
-  } to {
+  }
+  to {
     transform: translateX(-30px);
     opacity: 0;
   }
@@ -330,7 +331,8 @@ export default {
   from {
     transform: translateX(-30px);
     opacity: 0;
-  } to {
+  }
+  to {
     transform: translateX(0);
     opacity: 1;
   }
@@ -339,7 +341,8 @@ export default {
 @-moz-keyframes route-leave {
   from {
     transform: translateX(0);
-  } to {
+  }
+  to {
     transform: translateX(-30px);
     opacity: 0;
   }
@@ -350,7 +353,8 @@ export default {
   from {
     transform: translateX(-30px);
     opacity: 0;
-  } to {
+  }
+  to {
     transform: translateX(0);
     opacity: 1;
   }
@@ -359,7 +363,8 @@ export default {
 @-o-keyframes route-leave {
   from {
     transform: translateX(0);
-  } to {
+  }
+  to {
     transform: translateX(-30px);
     opacity: 0;
   }
@@ -370,7 +375,8 @@ export default {
   from {
     transform: translateX(-30px);
     opacity: 0;
-  } to {
+  }
+  to {
     transform: translateX(0);
     opacity: 1;
   }
@@ -379,7 +385,8 @@ export default {
 @-ms-keyframes route-leave {
   from {
     transform: translateX(0);
-  } to {
+  }
+  to {
     transform: translateX(-30px);
     opacity: 0;
   }

@@ -48,7 +48,7 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-    <v-navigation-drawer v-model="drawer" class="primary white--text" app>
+    <v-navigation-drawer v-model="drawer" class="white--text elevation-elevation-10" app>
       <div
         class="
           subheading
@@ -152,6 +152,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.v-navigation-drawer {
+  background: $dashboard-navigation-drawer-bg !important;
+
+  .v-list .v-list-item--active {
+    background-color: #2f7fac;
+  }
+}
+
+.v-list--nav {
+  padding-left: 0;
+}
+
 .dashboardTransition-enter-active {
   animation: route-enter .56s;
   opacity: 0;
