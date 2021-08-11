@@ -37,7 +37,7 @@
           counter
           @click:append="show1 = !show1"
         ></v-text-field>
-        <router-link to="" class="font-weight-bold"
+        <router-link :to='{ name: "ResetPassword" }' class="font-weight-bold"
           >Forgot password?</router-link
         >
         <v-btn
