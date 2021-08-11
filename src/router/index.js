@@ -23,6 +23,8 @@ import Managers from "../views/Admin/Managers.vue";
 import adminSettings from "../views/Admin/Settings.vue";
 import adminProfileSettings from "../views/Admin/profileSettings.vue";
 import adminAccountSettings from "../views/Admin/accountSettings.vue";
+import AuthMailConfirmation from "../views/AuthMailConfirmation.vue";
+import ResetPassword from "../views/ResetPassword.vue";
 
 import {getUserPath} from '../globalFunctions.js'
 
@@ -267,6 +269,20 @@ const routes = [
       isSecured: true,
     }
   },
+
+  // Confirmation routes
+  {
+    path: "/authemailconfirmation",
+    name: "authemailconfirmation",
+    component: AuthMailConfirmation
+  },
+
+  // Reset Password
+  {
+    path: "/resetpassword",
+    name: "ResetPassword",
+    component: ResetPassword
+  }
 ];
 
 const router = new VueRouter({

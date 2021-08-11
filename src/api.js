@@ -6,22 +6,23 @@ export const IMAGE_URL = "https://localhost:44373/images/";
 export const END_POINTS = {
   AUTH_LOGIN: "auth/login",
   AUTH_REGISTER: "auth/register/",
+  AUTH_CONFIRM_EMAIL: "auth/confirmemail",
   USER_MEALS: "meals/mymeals",
   ADD_MEAL: "meals/addmeal",
   DELETE_MEAL: "meals/deletemeal/",
   UPDATE_MEAL: "meals/editmeal/",
+  ADD_REVIEW: "review/add",
   GET_USERS: "admin/u/users",
   GET_USERS_MANAGER: "manager/users/all",
   GET_MANAGERS: "admin/u/managers",
   ADD_MANAGER: "admin/addmanager",
-  ADD_REVIEW: "review/add",
   GET_REVIEWS: "review/all",
   DELETE_USER_MANAGER: "manager/users/delete/",
   DELETE_MANAGER_USER: "admin/u/delete/",
   GET_USER_PROFILE: "profile/authuser",
   CHANGE_PASSWORD: "profile/authuser/changepassword",
   GET_USER_INFO: "profile/authuser",
-  EDIT_PROFILE: "profile/authuser/editprofile"
+  EDIT_PROFILE: "profile/authuser/editprofile",
 };
 
 
