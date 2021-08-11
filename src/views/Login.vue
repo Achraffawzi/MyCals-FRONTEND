@@ -200,7 +200,7 @@ export default {
                   location.reload();
                 });
               } else if (response.data.userDisplay.role == "Admin") {
-                this.$router.push({ name: "AdminDashboardAppStats" }, () => {
+                this.$router.push({ name: "AdminDashboardUsers" }, () => {
                   location.reload();
                 });
               }

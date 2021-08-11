@@ -301,9 +301,9 @@ router.beforeEach((to, from, next) => {
 
   let token = localStorage.getItem('L_T');
 
-  if(to.meta.isSecured) {
-    if(token != null) {
-      next({ path: getUserPath(token) });
+  if(to.meta.isSecured && to.path !== from.path) {
+    if(token != null && to.path === getUserPath(token)) {
+      next();
     } else {
       next({ name: "unauthorized" });
     }
