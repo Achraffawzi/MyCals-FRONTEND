@@ -16,7 +16,7 @@
         <v-col cols="12" sm="12" md="7">
           <div class="banner__img">
             <img
-              src="../../assets/banner-img.svg"
+              src="../../assets/banner-breakfast.svg"
               alt=""
               style="max-width: 100%"
               draggable="false"
@@ -52,7 +52,7 @@ export default {
 
   .banner__intro__button {
     margin: 0 auto 30px ;
-    display: block ;
+    display: flex ;
   }
 }
 </style>

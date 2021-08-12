@@ -4,7 +4,7 @@
       <v-container class="d-flex align-center justify-space-between">
         <div class="nav__logo">
           <span class="text-h5">My</span>
-          <span class="primary--text text-h5">Cals</span>
+          <span class="primary--text text-h5 font-weight-bold">Cals</span>
         </div>
         <div class="banner__humburger" @click="toggleNavbar">
           <span class="line"></span>
