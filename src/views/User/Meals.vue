@@ -45,6 +45,22 @@
         <v-col cols="12" md="6"></v-col>
         <!-- add button col -->
       </v-row>
+      <!-- calories goals and current calories -->
+      <v-row>
+        <!-- Goal -->
+        <v-col cols="12" md="6">
+          <h4 class="text-h4 font-weight-bold primary--text">Calories goal</h4>
+          <v-chip class="primary white--text">
+            <span>{{ getCaloriesGoal }}</span>
+          </v-chip>
+        </v-col>
+        <v-col cols="12" md="6">
+          <h4 class="text-h4 font-weight-bold primary--text">Calories consumed</h4>
+          <v-chip :color="setChipColor(getTotalCalories)" dark>
+            <span>{{ getTotalCalories }}</span>
+          </v-chip>
+        </v-col>
+      </v-row>
       <!-- Table -->
       <v-container>
         <v-data-table
@@ -54,8 +70,8 @@
           class="elevation-1"
           :search="searchingMeal"
         >
-          <!-- Calories chip
-          <template v-slot:[`item.calories`]="{ item }">
+          <!-- Calories chip -->
+          <!-- <template v-slot:[`item.calories`]="{ item }">
             <v-chip :color="getColor(item.calories)" dark>
               {{ item.calories }}
             </v-chip>
@@ -172,6 +188,8 @@ export default {
   name: "Meals",
   data(vm) {
     return {
+      calories_goal: 0,
+      chipCalsColor: "",
       // The searching meal
       searchingMeal: "",
       snackbarSuccess: false,
@@ -250,6 +268,18 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? "New Meal" : "Edit Meal";
     },
+    getCaloriesGoal() {
+      return this.$store.state.calories_goal;
+    },
+    getTotalCalories() {
+      let mealsOfTheDay = this.meals.filter(meal => meal.date == new Date().toISOString().split('T')[0]);
+      let totalCals = 0;
+      mealsOfTheDay.forEach(meal => {
+        totalCals += meal.calories;
+      });
+
+      return totalCals;
+    }
   },
   watch: {
     date() {
@@ -284,11 +314,17 @@ export default {
         .then((response) => {
           this.meals = [...response.data];
           this.meals.forEach((meal) => {
-            meal.time = meal.date.split("T")[1];
+            meal.time = meal.date.split("T")[1].substr(0, 5);
             meal.date = meal.date.split("T")[0];
           });
         })
         .catch((error) => console.log(error));
+    },
+
+    //change color of calories chip
+    setChipColor(value) {
+
+      return value < this.$store.state.calories_goal ?  "red" : "success";
     },
 
     editItem(item) {
@@ -313,6 +349,7 @@ export default {
 
       this.closeDelete();
       this.snackbarSuccess = true;
+      location.reload();
     },
 
     close() {
@@ -372,6 +409,11 @@ export default {
         // Error Toolbar
         this.snackbarError = true;
       }
+
+
+      this.dialog = false;
+      this.dialogDelete = false;
+      location.reload();
 
       // reset form
       this.$refs.mealsForm.reset();

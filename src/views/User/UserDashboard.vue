@@ -242,6 +242,8 @@ export default {
         .then((response) => {
           if (response.data.pictureUser != null) {
             this.userAvatarSrc = IMAGE_URL + "" + response.data.pictureUser;
+            // Set the value of calories goal in the store
+            this.$store.dispatch("setCaloriesGoal", response.data.calories_Goal);
           } else {
             // Set default avatar
             this.userNameAvatar =

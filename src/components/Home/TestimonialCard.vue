@@ -35,9 +35,7 @@
             </v-card-title>
             <v-card-text>
               <p>{{ review.text }}</p>
-              <h3 class="primary--text font-weight-bold">
-                {{ review.nameOfAuthor }}
-              </h3>
+              
               <v-rating
                 v-model="review.nbr_Stars"
                 color="primary"
@@ -47,6 +45,12 @@
                 size="25"
               ></v-rating>
             </v-card-text>
+
+            <v-card-actions class="d-flex align-center justify-end pa-3">
+              <h3 class="primary--text font-weight-bold">
+                {{ review.nameOfAuthor }}
+              </h3>
+            </v-card-actions>
           </v-col>
         </v-row>
       </v-card>
@@ -101,19 +105,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.testimonial__card {
-  position: relative;
-
-  .quote-icon:after {
-    contain: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 10px;
-    height: 10px;
-    background-color: red;
+.v-rating > button {
+    padding: 0 !important;
   }
-}
+
 .testimonial__img {
   height: 240px;
   object-fit: contain;

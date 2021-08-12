@@ -240,7 +240,7 @@
 </template>
 
 <script>
-let actualAvatar = document.querySelector("img");
+
 import { END_POINTS, createApiEndPoints, IMAGE_URL } from "@/api.js";
 export default {
   name: "userProfileSettings",
@@ -321,11 +321,17 @@ export default {
       }
 
       // Set src attribut of Image Tag
+      let imgSrc = this.userAvatarSrc;
+        console.log("this.userAvatarSrc : " + this.userAvatarSrc);
+        let avatarSpan = document.querySelector("#avatar-span");
+        let avatarText = document.querySelector("#avatar-text");
+        let actualAvatar = document.querySelector("#actualAvatar");
+        console.log("avatarSpan" + avatarSpan);
+        console.log("avatartext" + avatarText);
       reader.addEventListener("load", function () {
-        console.log(reader.result);
-        if (this.userAvatarSrc == null && file) {
-          let avatarSpan = document.querySelector("#avatar-span");
-          let avatarText = document.querySelector("#avatar-text");
+        if (imgSrc == null && file) {
+          console.log("imgsrc " + imgSrc);
+          console.log("if");
           avatarSpan.style.display = "none";
           let newAvatar = document.createElement("img");
           avatarText.appendChild(newAvatar);
@@ -334,13 +340,15 @@ export default {
 
           this.profileInfo.pictureUser = reader.result;
           this.userAvatarSrc = reader.result;
-
-          this.userAvatarSrc = reader.result;
         } else {
-          this.userAvatarSrc = reader.result;
+          console.log("else" + reader.result);
+          imgSrc = reader.result;
+          // this.userAvatarSrc = reader.result;
           actualAvatar.setAttribute("src", reader.result);
         }
       });
+      
+      this.userAvatarSrc = imgSrc;
 
       //   reader.readAsDataURL(file);
     },
