@@ -18,7 +18,7 @@
         <v-row wrap class="align-items-stretch">
           <v-col cols="12" sm="12" md="4">
             <!-- current logged in User avatar -->
-            <v-avatar tile v-if="review.picture != null">
+            <v-avatar style="width: 100%; height: 100%;" tile v-if="review.picture != null">
               <img
                 style="width: 100%; height: 100%;"
                 tile
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { END_POINTS, createApiEndPoints } from "@/api.js";
+import { END_POINTS, createApiEndPoints, IMAGE_URL } from "@/api.js";
 import carousel from "vue-owl-carousel";
 export default {
   name: "TestimonialCard",
@@ -82,11 +82,16 @@ export default {
         .then((response) => {
           this.reviews = [...response.data];
           this.reviews.forEach((review) => {
-            if (review.picture == null)
+            if (review.picture == null) {
               this.getUserNameAvatar =
                 review.nameOfAuthor.split(" ")[0].charAt(0).toUpperCase() +
                 "" +
                 review.nameOfAuthor.split(" ")[1].charAt(0).toUpperCase();
+            } else {
+
+              review.picture = IMAGE_URL + "" + review.picture;
+
+            }
           });
         })
         .catch((error) => console.log(error));
