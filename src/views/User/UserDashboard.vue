@@ -181,11 +181,6 @@ export default {
       // Binding All links
       items: [
         { icon: "restaurant", title: "Meals", route: "/userDashboard/Meals" },
-        {
-          icon: "equalizer",
-          title: "Statistics",
-          route: "/userDashboard/UserStats",
-        },
       ],
       accountRouteObj: [
         { title: "Settings", route: "/userSettings/userProfileSettings" },

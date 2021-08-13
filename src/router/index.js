@@ -12,7 +12,6 @@ import NotFound from "../views/NotFound.vue";
 import UserDashboard from "../views/User/UserDashboard.vue";
 import userSettings from "../views/User/Settings.vue";
 import Meals from "../views/User/Meals.vue";
-import UserStats from "../views/User/UserStats.vue";
 import userProfileSettings from "../views/User/profileSettings.vue";
 import userAccountSettings from "../views/User/accountSettings.vue";
 
@@ -22,7 +21,6 @@ import profileSettings from "../views/Manager/profileSettings.vue";
 import accountSettings from "../views/Manager/accountSettings.vue";
 
 import AdminDashboard from "../views/Admin/AdminDashboard.vue";
-import AppStats from "../views/Admin/AppStats.vue";
 import Users from "../views/Admin/Users.vue";
 import Managers from "../views/Admin/Managers.vue";
 import adminSettings from "../views/Admin/Settings.vue";
@@ -138,14 +136,6 @@ const routes = [
           isSecured: true,
         }
       },
-      {
-        name: "UserDashboardStats",
-        path: "UserStats",
-        component: UserStats,
-        meta: {
-          isSecured: true,
-        }
-      },
     ],
     meta: {
       isSecured: true,
@@ -220,14 +210,6 @@ const routes = [
     name: "AdminDashboard",
     component: AdminDashboard,
     children: [
-      {
-        name: "AdminDashboardAppStats",
-        path: "AppStats",
-        component: AppStats,
-        meta: {
-          isSecured: true,
-        }
-      },
       {
         name: "AdminDashboardUsers",
         path: "Users",

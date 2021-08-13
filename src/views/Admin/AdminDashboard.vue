@@ -102,11 +102,6 @@ export default {
 
       // Binding All links
       items: [
-        {
-          icon: "equalizer",
-          title: "Statistics",
-          route: "/AdminDashboard/AppStats",
-        },
         { icon: "groups", title: "Users", route: "/AdminDashboard/Users" },
         {
           icon: "group",
