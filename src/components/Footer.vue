@@ -7,12 +7,12 @@
             <v-icon class="secondary--text mr-3">place</v-icon>
             <span class="font-weight-light"
               >21 Revolution street
-              <span class="font-weight-bold">Paris, France</span></span
+              <span class="font-weight-bold">Agadir, Morocco</span></span
             >
           </div>
           <div class="footer__icons footer__phone mb-4">
             <v-icon class="secondary--text mr-3">phone</v-icon>
-            <span class="font-weight-light">+1 555 123456</span>
+            <span class="font-weight-light">+212655555555</span>
           </div>
           <div class="footer__icons footer__address mb-4">
             <v-icon class="secondary--text mr-3">email</v-icon>
@@ -22,8 +22,10 @@
         <v-col cols="12" sm="12" md="6">
           <h2 class="font-weight-bold mb-3">About MyCals</h2>
           <p class="font-weight-light">
-            simply dummy text of the printing and typesetting industry. Lorem
-            Ipsum has been the industry's standard
+            Welcome to MyCals, your number one source for all things nutrition.
+        We're dedicated to providing you the very best of our services that will
+        help you achieve your goals, with an emphasis on learning, tracking and
+        improving your nutrition and eating habits.
           </p>
         </v-col>
       </v-row>

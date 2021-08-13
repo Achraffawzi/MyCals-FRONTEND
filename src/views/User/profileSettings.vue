@@ -1,242 +1,248 @@
 <template>
   <div class="profile-settings mt-xm-0 mt-md-16">
     <!-- Success on update operation -->
-      <v-snackbar v-model="snackbar" top>
-        {{ snackbarMessage }}
+    <v-snackbar v-model="snackbar" top>
+      {{ snackbarMessage }}
 
-        <template v-slot:action="{ attrs }">
-          <v-btn
-            class="white--text"
-            text
-            v-bind="attrs"
-            @click="snackbar = false"
-          >
-            Close
-          </v-btn>
-        </template>
-      </v-snackbar>
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          class="white--text"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
     <h5 class="text-h4 font-weight-bold mb-5">Account</h5>
     <v-form ref="formUpdate">
       <div>
-      <div class="d-flex justify-space-between align-center py-4">
-        <div class="d-flex flex-column align-start justify-center">
-          <!-- current logged in User avatar -->
-          <label
-            for="avatarFile"
-            v-if="userAvatarSrc != ''"
-            style="cursor: pointer"
-          >
-            <v-avatar id="avatar-image" style="position: relative" size="150">
-              <img
-                :src="userAvatarSrc"
-                max-width="40"
-                class="rounded-circle"
-                style="cursor: pointer"
-                id="actualAvatar"
-              />
-            </v-avatar>
-          </label>
-          <label for="avatarFile" v-else style="cursor: pointer">
-            <v-avatar
-              id="avatar-text"
-              style="position: relative"
-              color="primary"
-              size="150"
+        <div class="d-flex justify-space-between align-center py-4">
+          <div class="d-flex flex-column align-start justify-center">
+            <!-- current logged in User avatar -->
+            <label
+              for="avatarFile"
+              v-if="userAvatarSrc != ''"
+              style="cursor: pointer"
             >
-              <span class="white--text text-h3" id="avatar-span">{{
-                userNameAvatar
-              }}</span>
-            </v-avatar>
-          </label>
-          <input
-            class="d-none"
-            type="file"
-            name="avatarFile"
-            id="avatarFile"
-            @change="setAvatar($event)"
-          />
-        </div>
-      </div>
-    </div>
-
-    <div>
-      <div class="d-flex justify-space-between align-center py-4">
-        <div class="d-flex flex-column align-start justify-center">
-          <span class="font-weight-bold">Firstname</span>
-          <v-text-field
-            v-model="profileInfo.firstName"
-            :disabled="!isFirstnameChanging"
-            :rules="nameRule"
-          >
-          </v-text-field>
-        </div>
-        <v-btn
-          outlined
-          color="primary"
-          @click="isFirstnameChanging = !isFirstnameChanging"
-          >{{ changeButtonValue(isFirstnameChanging) }}</v-btn
-        >
-      </div>
-    </div>
-    <v-divider></v-divider>
-
-    <div>
-      <div class="d-flex justify-space-between align-center py-4">
-        <div class="d-flex flex-column align-start justify-center">
-          <span class="font-weight-bold">Lastname</span>
-          <v-text-field
-            v-model="profileInfo.lastName"
-            :disabled="!isLastnameChanging"
-            :rules="nameRule"
-          >
-          </v-text-field>
-        </div>
-        <v-btn
-          outlined
-          color="primary"
-          @click="isLastnameChanging = !isLastnameChanging"
-          >{{ changeButtonValue(isLastnameChanging) }}</v-btn
-        >
-      </div>
-    </div>
-    <v-divider></v-divider>
-
-    <div>
-      <div class="d-flex justify-space-between align-center py-4">
-        <div class="d-flex flex-column align-start justify-center">
-          <span class="font-weight-bold">Gender</span>
-          <v-select
-            :items="genders"
-            :disabled="!isGenderChanging"
-            v-model="profileInfo.gender"
-          ></v-select>
-        </div>
-        <v-btn
-          outlined
-          color="primary"
-          @click="isGenderChanging = !isGenderChanging"
-          >{{ changeButtonValue(isGenderChanging) }}</v-btn
-        >
-      </div>
-    </div>
-    <v-divider></v-divider>
-
-    <div>
-      <div class="d-flex justify-space-between align-center py-4">
-        <div class="d-flex flex-column align-start justify-center">
-          <span class="font-weight-bold">Date of birth</span>
-          <v-menu
-            ref="menu"
-            v-model="menu"
-            :close-on-content-click="false"
-            :return-value.sync="date"
-            transition="scale-transition"
-            offset-y
-            min-width="auto"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-text-field
-                v-model="profileInfo.date_Of_Birth"
-                prepend-icon="mdi-calendar"
-                :disabled="!isDobChanging"
-                v-bind="attrs"
-                v-on="on"
-              ></v-text-field>
-            </template>
-            <v-date-picker
-              v-model="profileInfo.date_Of_Birth"
-              no-title
-              scrollable
-              :rules="dateRule"
-            >
-              <v-spacer></v-spacer>
-              <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
-              <v-btn
-                text
+              <v-avatar id="avatar-image" style="position: relative" size="150">
+                <img
+                  :src="userAvatarSrc"
+                  max-width="40"
+                  class="rounded-circle"
+                  style="cursor: pointer"
+                  id="actualAvatar"
+                />
+              </v-avatar>
+            </label>
+            <label for="avatarFile" v-else style="cursor: pointer">
+              <v-avatar
+                id="avatar-text"
+                style="position: relative"
                 color="primary"
-                @click="$refs.menu.save(profileInfo.date_Of_Birth)"
+                size="150"
               >
-                OK
-              </v-btn>
-            </v-date-picker>
-          </v-menu>
+                <span class="white--text text-h3" id="avatar-span">{{
+                  userNameAvatar
+                }}</span>
+              </v-avatar>
+            </label>
+            <input
+              class="d-none"
+              type="file"
+              name="avatarFile"
+              id="avatarFile"
+              @change="setAvatar($event)"
+            />
+          </div>
         </div>
-        <v-btn
-          outlined
-          color="primary"
-          @click="isDobChanging = !isDobChanging"
-          >{{ changeButtonValue(isDobChanging) }}</v-btn
-        >
       </div>
-    </div>
-    <v-divider></v-divider>
 
-    <div>
-      <div class="d-flex justify-space-between align-center py-4">
-        <div class="d-flex flex-column align-start justify-center">
-          <span class="font-weight-bold">Weight</span>
-          <v-text-field
-            v-model="profileInfo.weight"
-            :disabled="!isWeightChanging"
-            :rules="numberRule"
+      <div>
+        <div class="d-flex justify-space-between align-center py-4">
+          <div class="d-flex flex-column align-start justify-center">
+            <span class="font-weight-bold">Firstname</span>
+            <v-text-field
+              v-model="profileInfo.firstName"
+              :disabled="!isFirstnameChanging"
+              :rules="nameRule"
+            >
+            </v-text-field>
+          </div>
+          <v-btn
+            outlined
+            color="primary"
+            @click="isFirstnameChanging = !isFirstnameChanging"
+            >{{ changeButtonValue(isFirstnameChanging) }}</v-btn
           >
-          </v-text-field>
         </div>
-        <v-btn
-          outlined
-          color="primary"
-          @click="isWeightChanging = !isWeightChanging"
-          >{{ changeButtonValue(isWeightChanging) }}</v-btn
-        >
       </div>
-    </div>
-    <v-divider></v-divider>
+      <v-divider></v-divider>
 
-    <div>
-      <div class="d-flex justify-space-between align-center py-4">
-        <div class="d-flex flex-column align-start justify-center">
-          <span class="font-weight-bold">Height</span>
-          <v-text-field
-            v-model="profileInfo.height"
-            :disabled="!isHeightChanging"
-            :rules="numberRule"
+      <div>
+        <div class="d-flex justify-space-between align-center py-4">
+          <div class="d-flex flex-column align-start justify-center">
+            <span class="font-weight-bold">Lastname</span>
+            <v-text-field
+              v-model="profileInfo.lastName"
+              :disabled="!isLastnameChanging"
+              :rules="nameRule"
+            >
+            </v-text-field>
+          </div>
+          <v-btn
+            outlined
+            color="primary"
+            @click="isLastnameChanging = !isLastnameChanging"
+            >{{ changeButtonValue(isLastnameChanging) }}</v-btn
           >
-          </v-text-field>
         </div>
-        <v-btn
-          outlined
-          color="primary"
-          @click="isHeightChanging = !isHeightChanging"
-          >{{ changeButtonValue(isHeightChanging) }}</v-btn
-        >
       </div>
-    </div>
-    <v-divider></v-divider>
+      <v-divider></v-divider>
 
-    <div>
-      <div class="d-flex justify-space-between align-center py-4">
-        <div class="d-flex flex-column align-start justify-center">
-          <span class="font-weight-bold">Calories goal</span>
-          <v-text-field
-            v-model="profileInfo.calories_goal"
-            :disabled="!isCaloriesChanging"
-            :rules="numberRule"
+      <div>
+        <div class="d-flex justify-space-between align-center py-4">
+          <div class="d-flex flex-column align-start justify-center">
+            <span class="font-weight-bold">Gender</span>
+            <v-select
+              :items="genders"
+              :disabled="!isGenderChanging"
+              v-model="profileInfo.gender"
+            ></v-select>
+          </div>
+          <v-btn
+            outlined
+            color="primary"
+            @click="isGenderChanging = !isGenderChanging"
+            >{{ changeButtonValue(isGenderChanging) }}</v-btn
           >
-          </v-text-field>
         </div>
-        <v-btn
-          outlined
-          color="primary"
-          @click="isCaloriesChanging = !isCaloriesChanging"
-          >{{ changeButtonValue(isCaloriesChanging) }}</v-btn
-        >
       </div>
-    </div>
-    <v-divider></v-divider>
+      <v-divider></v-divider>
 
-    <v-btn @click="handleEditProfile" :loading="loadingUpdate" class="white--text primary" text
-      >Save changes</v-btn
-    >
+      <div>
+        <div class="d-flex justify-space-between align-center py-4">
+          <div class="d-flex flex-column align-start justify-center">
+            <span class="font-weight-bold">Date of birth</span>
+            <v-menu
+              ref="menu"
+              v-model="menu"
+              :close-on-content-click="false"
+              :return-value.sync="date"
+              transition="scale-transition"
+              offset-y
+              min-width="auto"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  v-model="profileInfo.date_Of_Birth"
+                  prepend-icon="mdi-calendar"
+                  :disabled="!isDobChanging"
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                v-model="profileInfo.date_Of_Birth"
+                no-title
+                scrollable
+                :rules="dateRule"
+              >
+                <v-spacer></v-spacer>
+                <v-btn text color="primary" @click="menu = false">
+                  Cancel
+                </v-btn>
+                <v-btn
+                  text
+                  color="primary"
+                  @click="$refs.menu.save(profileInfo.date_Of_Birth)"
+                >
+                  OK
+                </v-btn>
+              </v-date-picker>
+            </v-menu>
+          </div>
+          <v-btn
+            outlined
+            color="primary"
+            @click="isDobChanging = !isDobChanging"
+            >{{ changeButtonValue(isDobChanging) }}</v-btn
+          >
+        </div>
+      </div>
+      <v-divider></v-divider>
+
+      <div>
+        <div class="d-flex justify-space-between align-center py-4">
+          <div class="d-flex flex-column align-start justify-center">
+            <span class="font-weight-bold">Weight</span>
+            <v-text-field
+              v-model="profileInfo.weight"
+              :disabled="!isWeightChanging"
+              :rules="numberRule"
+            >
+            </v-text-field>
+          </div>
+          <v-btn
+            outlined
+            color="primary"
+            @click="isWeightChanging = !isWeightChanging"
+            >{{ changeButtonValue(isWeightChanging) }}</v-btn
+          >
+        </div>
+      </div>
+      <v-divider></v-divider>
+
+      <div>
+        <div class="d-flex justify-space-between align-center py-4">
+          <div class="d-flex flex-column align-start justify-center">
+            <span class="font-weight-bold">Height</span>
+            <v-text-field
+              v-model="profileInfo.height"
+              :disabled="!isHeightChanging"
+              :rules="numberRule"
+            >
+            </v-text-field>
+          </div>
+          <v-btn
+            outlined
+            color="primary"
+            @click="isHeightChanging = !isHeightChanging"
+            >{{ changeButtonValue(isHeightChanging) }}</v-btn
+          >
+        </div>
+      </div>
+      <v-divider></v-divider>
+
+      <div>
+        <div class="d-flex justify-space-between align-center py-4">
+          <div class="d-flex flex-column align-start justify-center">
+            <span class="font-weight-bold">Calories goal</span>
+            <v-text-field
+              v-model="profileInfo.calories_goal"
+              :disabled="!isCaloriesChanging"
+              :rules="numberRule"
+            >
+            </v-text-field>
+          </div>
+          <v-btn
+            outlined
+            color="primary"
+            @click="isCaloriesChanging = !isCaloriesChanging"
+            >{{ changeButtonValue(isCaloriesChanging) }}</v-btn
+          >
+        </div>
+      </div>
+      <v-divider></v-divider>
+
+      <v-btn
+        @click="handleEditProfile"
+        :loading="loadingUpdate"
+        class="white--text primary"
+        text
+        >Save changes</v-btn
+      >
     </v-form>
   </div>
 </template>
@@ -248,7 +254,6 @@ export default {
 
   data() {
     return {
-
       snackbar: false,
       snackbarMessage: "",
 
@@ -314,20 +319,18 @@ export default {
         }
       })
       .catch((error) => console.log(error));
-
-    // this.getUserAvatar(); // Get the user avatar
   },
 
   watch: {
-      loader () {
-        const l = this.loader
-        this[l] = !this[l]
+    loader() {
+      const l = this.loader;
+      this[l] = !this[l];
 
-        setTimeout(() => (this[l] = false), 3000)
+      setTimeout(() => (this[l] = false), 3000);
 
-        this.loader = null
-      },
+      this.loader = null;
     },
+  },
 
   methods: {
     setAvatar(event) {
@@ -348,8 +351,7 @@ export default {
 
       reader.addEventListener("load", function () {
         // If the old photo is just the default one and then the user selected a new picture
-        if (imgSrc == null && file != null) {
-          console.log("if");
+        if (!/\d/.test(imgSrc) && file != null) {
           avatarSpan.style.display = "none";
           let newAvatar = document.createElement("img");
           avatarText.appendChild(newAvatar);
@@ -361,21 +363,14 @@ export default {
           imgSrc = reader.result;
         }
         // if the old photo is NOT the default and the user changed it
-        else if (imgSrc != null && file != null) {
-          console.log("else");
+        else if (/\d/.test(imgSrc) && file != null) {
           this.userAvatarSrc = reader.result;
           imgSrc = reader.result;
           actualAvatar.setAttribute("src", reader.result);
-        } else {
-          console.log("else test");
-          console.log(imgSrc);
-          console.log(file);
         }
       });
 
       this.userAvatarSrc = imgSrc;
-      // this.file = file;
-      //   reader.readAsDataURL(file);
     },
 
     handleChangeFocus() {
@@ -387,7 +382,7 @@ export default {
     },
 
     handleEditProfile() {
-      this.loadingUpdate= true;
+      this.loadingUpdate = true;
       if (this.$refs.formUpdate.validate()) {
         let formData = new FormData();
         formData.append("file", this.file);
@@ -403,7 +398,7 @@ export default {
           .update(formData)
           .then((response) => {
             this.snackbar = true;
-            this.snackbarMessage = response.data
+            this.snackbarMessage = response.data;
             setTimeout(() => {
               location.reload();
             }, 1500);

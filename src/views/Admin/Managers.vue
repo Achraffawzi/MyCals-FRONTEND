@@ -350,6 +350,8 @@ export default {
             this.managers.push(addedManager);
             this.snacbarAdd = true;
             this.errorMessage = response.data;
+
+            setTimeout(() => {location.reload()}, 1500);
           })
           .catch((error) => console.log(error));
       } else {
