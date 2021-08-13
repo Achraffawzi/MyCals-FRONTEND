@@ -17,20 +17,6 @@
             class="ma-3"
           >{{ item.title }}</router-link>
           <span style="cursor: pointer;" @click="handleSignout">Sign out</span>
-          <!-- current logged in User avatar -->
-          <!-- <v-avatar v-if="userAvatarSrc != ''">
-            <img
-              :src="userAvatarSrc"
-              max-width="40"
-              class="rounded-circle"
-              style="cursor: pointer"
-            />
-          </v-avatar>
-          <v-avatar v-else color="primary" size="40">
-            <span class="white--text text-h5">{{
-              userNameAvatar
-            }}</span>
-          </v-avatar> -->
         </div>
       </v-container>
     </div>
@@ -54,51 +40,13 @@
           </v-col>
           <!-- Navigation Content -->
           <v-col cols="12" md="7" class="offset-sm-0 offset-md-1">
-            <router-view></router-view>
+            <transition name="settingsTransition" mode="out-in">
+              <router-view></router-view>
+            </transition>
           </v-col>
         </v-row>
       </v-container>
     </div>
-
-    <!-- <v-navigation-drawer
-      v-model="drawer"
-      class="primary white--text"
-      app
-      absolute
-      temporary
-    >
-      <div
-        class="
-          subheading
-          white--text
-          text-center
-          my-16
-          dashboard__app-name dashboard-title
-        "
-      >
-        Settings
-      </div>
-
-      <v-list nav shaped>
-        <v-list-item-group v-model="drawer">
-          <v-list-item
-            v-for="item in items"
-            :key="item.title"
-            link
-            :to="item.route"
-          >
-            <v-list-item-icon>
-              <v-icon class="white--text">{{ item.icon }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title class="white--text">{{
-                item.title
-              }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer> -->
   </div>
 </template>
 
@@ -150,5 +98,124 @@ export default {
 .router-link-exact-active,
 .router-link-active {
   background: #ecebeb;
+}
+// router transition
+.settingsTransition-enter-active {
+  animation: route-enter 0.56s;
+  opacity: 0;
+  animation-delay: 0.1s;
+}
+
+.settingsTransition-leave-active {
+  animation: route-leave 0.56s;
+}
+
+@keyframes route-enter {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes route-leave {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+}
+
+// Chrome
+@-webkit-keyframes route-enter {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes route-leave {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+}
+
+// Mozilla
+@-moz-keyframes route-enter {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes route-leave {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+}
+
+// Opera
+@-o-keyframes route-enter {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@-o-keyframes route-leave {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+}
+
+// IE
+@-ms-keyframes route-enter {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@-ms-keyframes route-leave {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
 }
 </style>

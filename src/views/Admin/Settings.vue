@@ -40,7 +40,9 @@
           </v-col>
           <!-- Navigation Content -->
           <v-col cols="12" md="7" class="offset-sm-0 offset-md-1">
-            <router-view></router-view>
+            <transition name="settingsTransition" mode="out-in">
+              <router-view></router-view>
+            </transition>
           </v-col>
         </v-row>
       </v-container>
@@ -96,5 +98,124 @@ export default {
 .router-link-exact-active,
 .router-link-active {
   background: #ecebeb;
+}
+// router transition
+.settingsTransition-enter-active {
+  animation: route-enter 0.56s;
+  opacity: 0;
+  animation-delay: 0.1s;
+}
+
+.settingsTransition-leave-active {
+  animation: route-leave 0.56s;
+}
+
+@keyframes route-enter {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes route-leave {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+}
+
+// Chrome
+@-webkit-keyframes route-enter {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes route-leave {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+}
+
+// Mozilla
+@-moz-keyframes route-enter {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes route-leave {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+}
+
+// Opera
+@-o-keyframes route-enter {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@-o-keyframes route-leave {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+}
+
+// IE
+@-ms-keyframes route-enter {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@-ms-keyframes route-leave {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
 }
 </style>
