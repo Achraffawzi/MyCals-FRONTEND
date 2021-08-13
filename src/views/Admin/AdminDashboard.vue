@@ -40,7 +40,7 @@
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
           <!-- Sign out link -->
-          <v-list-item style="cursor: pointer;">
+          <v-list-item style="cursor: pointer">
             <v-list-item-title @click="handleSignout"
               >Sign out</v-list-item-title
             >
@@ -160,20 +160,21 @@ export default {
 }
 
 .dashboardTransition-enter-active {
-  animation: route-enter .56s;
+  animation: route-enter 0.56s;
   opacity: 0;
-  animation-delay: .1s;
+  animation-delay: 0.1s;
 }
 
 .dashboardTransition-leave-active {
-  animation: route-leave .56s;
+  animation: route-leave 0.56s;
 }
 
 @keyframes route-enter {
   from {
     transform: translateX(-30px);
     opacity: 0;
-  } to {
+  }
+  to {
     transform: translateX(0);
     opacity: 1;
   }
@@ -182,7 +183,8 @@ export default {
 @keyframes route-leave {
   from {
     transform: translateX(0);
-  } to {
+  }
+  to {
     transform: translateX(-30px);
     opacity: 0;
   }
@@ -193,7 +195,8 @@ export default {
   from {
     transform: translateX(-30px);
     opacity: 0;
-  } to {
+  }
+  to {
     transform: translateX(0);
     opacity: 1;
   }
@@ -202,7 +205,8 @@ export default {
 @-webkit-keyframes route-leave {
   from {
     transform: translateX(0);
-  } to {
+  }
+  to {
     transform: translateX(-30px);
     opacity: 0;
   }
@@ -213,7 +217,8 @@ export default {
   from {
     transform: translateX(-30px);
     opacity: 0;
-  } to {
+  }
+  to {
     transform: translateX(0);
     opacity: 1;
   }
@@ -222,7 +227,8 @@ export default {
 @-moz-keyframes route-leave {
   from {
     transform: translateX(0);
-  } to {
+  }
+  to {
     transform: translateX(-30px);
     opacity: 0;
   }
@@ -233,7 +239,8 @@ export default {
   from {
     transform: translateX(-30px);
     opacity: 0;
-  } to {
+  }
+  to {
     transform: translateX(0);
     opacity: 1;
   }
@@ -242,7 +249,8 @@ export default {
 @-o-keyframes route-leave {
   from {
     transform: translateX(0);
-  } to {
+  }
+  to {
     transform: translateX(-30px);
     opacity: 0;
   }
@@ -253,7 +261,8 @@ export default {
   from {
     transform: translateX(-30px);
     opacity: 0;
-  } to {
+  }
+  to {
     transform: translateX(0);
     opacity: 1;
   }
@@ -262,7 +271,8 @@ export default {
 @-ms-keyframes route-leave {
   from {
     transform: translateX(0);
-  } to {
+  }
+  to {
     transform: translateX(-30px);
     opacity: 0;
   }

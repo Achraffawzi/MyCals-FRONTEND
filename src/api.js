@@ -27,7 +27,6 @@ export const END_POINTS = {
   EDIT_PROFILE: "profile/authuser/editprofile",
 };
 
-
 export const authAxois = axios.create({
   BASE_URL: BASE_URL,
   headers: {

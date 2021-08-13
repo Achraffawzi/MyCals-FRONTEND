@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       collapsed: false,
-    }
+    };
   },
 
   methods: {

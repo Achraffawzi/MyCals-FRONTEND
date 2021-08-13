@@ -18,14 +18,23 @@
         <v-row wrap class="align-items-stretch">
           <v-col cols="12" sm="12" md="4">
             <!-- current logged in User avatar -->
-            <v-avatar style="width: 100%; height: 100%;" tile v-if="review.picture != null">
+            <v-avatar
+              style="width: 100%; height: 100%"
+              tile
+              v-if="review.picture != null"
+            >
               <img
-                style="width: 100%; height: 100%;"
+                style="width: 100%; height: 100%"
                 tile
                 :src="review.picture"
               />
             </v-avatar>
-            <v-avatar style="width: 100%; height: 100%;" tile v-else color="primary">
+            <v-avatar
+              style="width: 100%; height: 100%"
+              tile
+              v-else
+              color="primary"
+            >
               <span class="white--text text-h3">{{ getUserNameAvatar }}</span>
             </v-avatar>
           </v-col>
@@ -35,7 +44,7 @@
             </v-card-title>
             <v-card-text>
               <p>{{ review.text }}</p>
-              
+
               <v-rating
                 v-model="review.nbr_Stars"
                 color="primary"
@@ -92,9 +101,7 @@ export default {
                 "" +
                 review.nameOfAuthor.split(" ")[1].charAt(0).toUpperCase();
             } else {
-
               review.picture = IMAGE_URL + "" + review.picture;
-
             }
           });
         })
@@ -106,8 +113,8 @@ export default {
 
 <style lang="scss" scoped>
 .v-rating > button {
-    padding: 0 !important;
-  }
+  padding: 0 !important;
+}
 
 .testimonial__img {
   height: 240px;
@@ -115,6 +122,8 @@ export default {
 }
 
 @media screen and (max-width: 959px) {
-  .v-avatar { height: 200px !important }
+  .v-avatar {
+    height: 200px !important;
+  }
 }
 </style>

@@ -60,108 +60,127 @@
 
     <v-form ref="formUpdate">
       <div>
-      <div class="d-flex justify-space-between align-center py-4">
-        <div class="d-flex flex-column align-start justify-center">
-          <span class="font-weight-bold">Firstname</span>
-          <v-text-field
-            v-model="profileInfo.firstName"
-            :disabled="!isFirstnameChanging"
-            :rules="nameRule"
+        <div class="d-flex justify-space-between align-center py-4">
+          <div class="d-flex flex-column align-start justify-center">
+            <span class="font-weight-bold">Firstname</span>
+            <v-text-field
+              v-model="profileInfo.firstName"
+              :disabled="!isFirstnameChanging"
+              :rules="nameRule"
+            >
+            </v-text-field>
+          </div>
+          <v-btn
+            outlined
+            color="primary"
+            @click="isFirstnameChanging = !isFirstnameChanging"
+            >{{ changeButtonValue(isFirstnameChanging) }}</v-btn
           >
-          </v-text-field>
         </div>
-        <v-btn
-          outlined
-          color="primary"
-          @click="isFirstnameChanging = !isFirstnameChanging"
-          >{{ changeButtonValue(isFirstnameChanging) }}</v-btn
-        >
       </div>
-    </div>
-    <v-divider></v-divider>
+      <v-divider></v-divider>
 
-    <div>
-      <div class="d-flex justify-space-between align-center py-4">
-        <div class="d-flex flex-column align-start justify-center">
-          <span class="font-weight-bold">Lastname</span>
-          <v-text-field
-            v-model="profileInfo.lastName"
-            :disabled="!isLastnameChanging"
-            :rules="nameRule"
+      <div>
+        <div class="d-flex justify-space-between align-center py-4">
+          <div class="d-flex flex-column align-start justify-center">
+            <span class="font-weight-bold">Lastname</span>
+            <v-text-field
+              v-model="profileInfo.lastName"
+              :disabled="!isLastnameChanging"
+              :rules="nameRule"
+            >
+            </v-text-field>
+          </div>
+          <v-btn
+            outlined
+            color="primary"
+            @click="isLastnameChanging = !isLastnameChanging"
+            >{{ changeButtonValue(isLastnameChanging) }}</v-btn
           >
-          </v-text-field>
         </div>
-        <v-btn
-          outlined
-          color="primary"
-          @click="isLastnameChanging = !isLastnameChanging"
-          >{{ changeButtonValue(isLastnameChanging) }}</v-btn
-        >
       </div>
-    </div>
-    <v-divider></v-divider>
+      <v-divider></v-divider>
 
-    <div>
-      <div class="d-flex justify-space-between align-center py-4">
-        <div class="d-flex flex-column align-start justify-center">
-          <span class="font-weight-bold">Gender</span>
-          <v-select
-            :items="genders"
-            :disabled="!isGenderChanging"
-            v-model="profileInfo.gender"
-          ></v-select>
-        </div>
-        <v-btn
-          outlined
-          color="primary"
-          @click="isGenderChanging = !isGenderChanging"
-          >{{ changeButtonValue(isGenderChanging) }}</v-btn
-        >
-      </div>
-    </div>
-    <v-divider></v-divider>
-
-    <div>
-      <div class="d-flex justify-space-between align-center py-4">
-        <div class="d-flex flex-column align-start justify-center">
-          <span class="font-weight-bold">Date of birth</span>
-          <v-menu
-            ref="menu"
-            v-model="menu"
-            :close-on-content-click="false"
-            :return-value.sync="date"
-            transition="scale-transition"
-            offset-y
-            min-width="auto"
+      <div>
+        <div class="d-flex justify-space-between align-center py-4">
+          <div class="d-flex flex-column align-start justify-center">
+            <span class="font-weight-bold">Gender</span>
+            <v-select
+              :items="genders"
+              :disabled="!isGenderChanging"
+              v-model="profileInfo.gender"
+            ></v-select>
+          </div>
+          <v-btn
+            outlined
+            color="primary"
+            @click="isGenderChanging = !isGenderChanging"
+            >{{ changeButtonValue(isGenderChanging) }}</v-btn
           >
-            <template v-slot:activator="{ on, attrs }">
-              <v-text-field
+        </div>
+      </div>
+      <v-divider></v-divider>
+
+      <div>
+        <div class="d-flex justify-space-between align-center py-4">
+          <div class="d-flex flex-column align-start justify-center">
+            <span class="font-weight-bold">Date of birth</span>
+            <v-menu
+              ref="menu"
+              v-model="menu"
+              :close-on-content-click="false"
+              :return-value.sync="date"
+              transition="scale-transition"
+              offset-y
+              min-width="auto"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  v-model="profileInfo.date_Of_Birth"
+                  prepend-icon="mdi-calendar"
+                  :disabled="!isDobChanging"
+                  v-bind="attrs"
+                  :rules="dateRule"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
                 v-model="profileInfo.date_Of_Birth"
-                prepend-icon="mdi-calendar"
-                :disabled="!isDobChanging"
-                v-bind="attrs"
-                :rules="dateRule"
-                v-on="on"
-              ></v-text-field>
-            </template>
-            <v-date-picker v-model="profileInfo.date_Of_Birth" no-title scrollable>
-              <v-spacer></v-spacer>
-              <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
-              <v-btn text color="primary" @click="$refs.menu.save(profileInfo.date_Of_Birth)">
-                OK
-              </v-btn>
-            </v-date-picker>
-          </v-menu>
+                no-title
+                scrollable
+              >
+                <v-spacer></v-spacer>
+                <v-btn text color="primary" @click="menu = false">
+                  Cancel
+                </v-btn>
+                <v-btn
+                  text
+                  color="primary"
+                  @click="$refs.menu.save(profileInfo.date_Of_Birth)"
+                >
+                  OK
+                </v-btn>
+              </v-date-picker>
+            </v-menu>
+          </div>
+          <v-btn
+            outlined
+            color="primary"
+            @click="isDobChanging = !isDobChanging"
+            >{{ changeButtonValue(isDobChanging) }}</v-btn
+          >
         </div>
-        <v-btn outlined color="primary" @click="isDobChanging = !isDobChanging"
-          >{{ changeButtonValue(isDobChanging) }}</v-btn
-        >
       </div>
-    </div>
-    <v-divider></v-divider>
+      <v-divider></v-divider>
     </v-form>
 
-    <v-btn @click="handleEditProfile" class="white--text primary" :loading="loadingUpdate" text>Save changes</v-btn>
+    <v-btn
+      @click="handleEditProfile"
+      class="white--text primary"
+      :loading="loadingUpdate"
+      text
+      >Save changes</v-btn
+    >
   </div>
 </template>
 
@@ -197,13 +216,14 @@ export default {
       ],
       dateRule: [(date) => date.length > 0 || "Date of birth is required"],
 
-      date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+        .toISOString()
+        .substr(0, 10),
       menu: false,
       modal: false,
 
       loader: null,
       loadingUpdate: false,
-      
     };
   },
 
@@ -213,18 +233,21 @@ export default {
       .fetch()
       .then((response) => {
         //   response.data.date_Of_Birth = response.data.date_Of_Birth.split('T')[0];
-        this.profileInfo = { ...response.data, date_Of_Birth: response.data.date_Of_Birth.split('T')[0] };
+        this.profileInfo = {
+          ...response.data,
+          date_Of_Birth: response.data.date_Of_Birth.split("T")[0],
+        };
 
         // Set the user avatar
         if (response.data.pictureUser != null) {
-            this.userAvatarSrc = IMAGE_URL + "" + response.data.pictureUser;
-          } else {
-            // Set default avatar
-            this.userNameAvatar =
-              response.data.firstName.charAt(0).toUpperCase() +
-              "" +
-              response.data.lastName.charAt(0).toUpperCase();
-          }
+          this.userAvatarSrc = IMAGE_URL + "" + response.data.pictureUser;
+        } else {
+          // Set default avatar
+          this.userNameAvatar =
+            response.data.firstName.charAt(0).toUpperCase() +
+            "" +
+            response.data.lastName.charAt(0).toUpperCase();
+        }
       })
       .catch((error) => console.log(error));
 
@@ -232,18 +255,17 @@ export default {
   },
 
   watch: {
-      loader () {
-        const l = this.loader
-        this[l] = !this[l]
+    loader() {
+      const l = this.loader;
+      this[l] = !this[l];
 
-        setTimeout(() => (this[l] = false), 3000)
+      setTimeout(() => (this[l] = false), 3000);
 
-        this.loader = null
-      },
+      this.loader = null;
     },
+  },
 
   methods: {
-    
     setAvatar(event) {
       this.file = event.target.files[0];
       let reader = new FileReader();
@@ -318,14 +340,14 @@ export default {
     },
 
     changeButtonValue(prop) {
-          return prop ? "Save" : "Change";
-      },
+      return prop ? "Save" : "Change";
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 input {
-        color: red !important;
-    }
+  color: red !important;
+}
 </style>

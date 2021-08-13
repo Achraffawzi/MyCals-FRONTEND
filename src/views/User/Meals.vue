@@ -55,7 +55,9 @@
           </v-chip>
         </v-col>
         <v-col cols="12" md="6">
-          <h4 class="text-h4 font-weight-bold primary--text">Calories consumed</h4>
+          <h4 class="text-h4 font-weight-bold primary--text">
+            Calories consumed
+          </h4>
           <v-chip :color="setChipColor(getTotalCalories)" dark>
             <span>{{ getTotalCalories }}</span>
           </v-chip>
@@ -272,14 +274,16 @@ export default {
       return this.$store.state.calories_goal;
     },
     getTotalCalories() {
-      let mealsOfTheDay = this.meals.filter(meal => meal.date == new Date().toISOString().split('T')[0]);
+      let mealsOfTheDay = this.meals.filter(
+        (meal) => meal.date == new Date().toISOString().split("T")[0]
+      );
       let totalCals = 0;
-      mealsOfTheDay.forEach(meal => {
+      mealsOfTheDay.forEach((meal) => {
         totalCals += meal.calories;
       });
 
       return totalCals;
-    }
+    },
   },
   watch: {
     date() {
@@ -323,8 +327,7 @@ export default {
 
     //change color of calories chip
     setChipColor(value) {
-
-      return value < this.$store.state.calories_goal ?  "red" : "success";
+      return value < this.$store.state.calories_goal ? "red" : "success";
     },
 
     editItem(item) {
@@ -409,7 +412,6 @@ export default {
         // Error Toolbar
         this.snackbarError = true;
       }
-
 
       this.dialog = false;
       this.dialogDelete = false;

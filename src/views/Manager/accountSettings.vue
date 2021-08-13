@@ -85,15 +85,15 @@ export default {
   },
 
   watch: {
-      loader () {
-        const l = this.loader
-        this[l] = !this[l]
+    loader() {
+      const l = this.loader;
+      this[l] = !this[l];
 
-        setTimeout(() => (this[l] = false), 3000)
+      setTimeout(() => (this[l] = false), 3000);
 
-        this.loader = null
-      },
+      this.loader = null;
     },
+  },
 
   methods: {
     // handle change password
@@ -109,12 +109,10 @@ export default {
         createApiEndPoints(END_POINTS.CHANGE_PASSWORD)
           .update(passwordSettings)
           .then((response) => {
-            if(response.status === 200){
-
+            if (response.status === 200) {
               this.alertMessage = response.data;
               this.setColorState = "success";
               this.setIconState = "done";
-
             }
           })
           .catch(() => {
@@ -123,8 +121,8 @@ export default {
             this.setIconState = "priority_high";
           });
 
-          this.loading = false;
-          this.$refs.accountSettingsForm.reset();
+        this.loading = false;
+        this.$refs.accountSettingsForm.reset();
       } else {
         this.alert = true;
         this.alertMessage = "Please verify your information";

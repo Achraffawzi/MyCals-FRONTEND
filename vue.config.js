@@ -7,7 +7,7 @@ module.exports = {
           @import "@/scss/_variables.scss";
           @import "@/scss/_reset.scss";
         `,
-      }
-    }
-  }
+      },
+    },
+  },
 };

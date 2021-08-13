@@ -28,7 +28,13 @@
             class="d-inline-block ml-auto"
           >
             <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" dark v-bind="attrs" v-on="on" class="ml-auto">
+              <v-btn
+                color="primary"
+                dark
+                v-bind="attrs"
+                v-on="on"
+                class="ml-auto"
+              >
                 New Manager
               </v-btn>
             </template>
@@ -351,7 +357,9 @@ export default {
             this.snacbarAdd = true;
             this.errorMessage = response.data;
 
-            setTimeout(() => {location.reload()}, 1500);
+            setTimeout(() => {
+              location.reload();
+            }, 1500);
           })
           .catch((error) => console.log(error));
       } else {

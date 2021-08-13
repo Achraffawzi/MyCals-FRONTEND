@@ -14,7 +14,7 @@ export default new Vuex.Store({
     },
     setCaloriesGoal: (state, calories_goal) => {
       state.calories_goal = calories_goal;
-    }
+    },
   },
   actions: {
     getUserToken: (context, token) => {
@@ -22,7 +22,7 @@ export default new Vuex.Store({
     },
     setCaloriesGoal: (context, calories_goal) => {
       context.commit("setCaloriesGoal", calories_goal);
-    }
+    },
   },
   modules: {},
 });

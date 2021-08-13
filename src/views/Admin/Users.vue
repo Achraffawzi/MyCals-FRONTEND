@@ -126,17 +126,16 @@ export default {
   },
 
   methods: {
-
     handleFetchUsers() {
       createApiEndPoints(END_POINTS.GET_USERS)
-      .fetch()
-      .then(response => {
-        response.data.forEach(user => {
-          user.date_Of_Birth = user.date_Of_Birth.split('T')[0];
+        .fetch()
+        .then((response) => {
+          response.data.forEach((user) => {
+            user.date_Of_Birth = user.date_Of_Birth.split("T")[0];
+          });
+          this.users = [...response.data];
         })
-        this.users = [...response.data]
-      })
-      .catch(error => console.log(error));
+        .catch((error) => console.log(error));
     },
 
     deleteItem(item) {
@@ -148,13 +147,15 @@ export default {
     deleteItemConfirm() {
       this.users.splice(this.editedIndex, 1);
       // API
-      createApiEndPoints(END_POINTS.DELETE_MANAGER_USER + "" + this.editedItem.id)
+      createApiEndPoints(
+        END_POINTS.DELETE_MANAGER_USER + "" + this.editedItem.id
+      )
         .delete()
-        .then(response => {
+        .then((response) => {
           this.snacbarDelete = true;
           this.errorMessage = response.data;
         })
-        .catch(error => console.log(error));
+        .catch((error) => console.log(error));
       this.closeDelete();
     },
 

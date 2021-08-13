@@ -176,14 +176,13 @@ export default {
       val || this.closeDelete();
     },
   },
-  
+
   mounted() {
     this.handleFetchUsers(); // Get all users API
     this.getUserAvatar(); // Get the user avatar
   },
 
   methods: {
-
     // Get User profile pic / Avatar
     getUserAvatar() {
       createApiEndPoints(END_POINTS.GET_USER_PROFILE)
@@ -201,17 +200,17 @@ export default {
         })
         .catch((error) => console.log(error));
     },
-    
+
     handleFetchUsers() {
       createApiEndPoints(END_POINTS.GET_USERS_MANAGER)
-      .fetch()
-      .then(response => {
-        response.data.forEach(user => {
-          user.date_Of_Birth = user.date_Of_Birth.split('T')[0];
+        .fetch()
+        .then((response) => {
+          response.data.forEach((user) => {
+            user.date_Of_Birth = user.date_Of_Birth.split("T")[0];
+          });
+          this.users = [...response.data];
         })
-        this.users = [...response.data]
-      })
-      .catch(error => console.log(error));
+        .catch((error) => console.log(error));
     },
 
     deleteItem(item) {
@@ -223,13 +222,15 @@ export default {
     deleteItemConfirm() {
       this.users.splice(this.editedIndex, 1);
       // API
-      createApiEndPoints(END_POINTS.DELETE_USER_MANAGER + "" + this.editedItem.id)
+      createApiEndPoints(
+        END_POINTS.DELETE_USER_MANAGER + "" + this.editedItem.id
+      )
         .delete()
-        .then(response => {
+        .then((response) => {
           this.snacbarDelete = true;
           this.errorMessage = response.data;
         })
-        .catch(error => console.log(error));
+        .catch((error) => console.log(error));
 
       this.closeDelete();
     },
@@ -251,9 +252,9 @@ export default {
     },
 
     handleSignout() {
-      localStorage.removeItem('L_T');
+      localStorage.removeItem("L_T");
       this.$router.push({ name: "Home" });
-    }
+    },
   },
 };
 </script>

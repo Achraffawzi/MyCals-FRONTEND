@@ -11,7 +11,14 @@
             Get ready to join one of the biggest comunities in the field of
             health and nuitrition, start your journey now.
           </p>
-          <v-btn depressed class="primary white--text font-weight-light banner__intro__button" link to="/Signup"> Get Start Now </v-btn>
+          <v-btn
+            depressed
+            class="primary white--text font-weight-light banner__intro__button"
+            link
+            to="/Signup"
+          >
+            Get Start Now
+          </v-btn>
         </v-col>
         <v-col cols="12" sm="12" md="7">
           <div class="banner__img">
@@ -51,8 +58,8 @@ export default {
   }
 
   .banner__intro__button {
-    margin: 0 auto 30px ;
-    display: flex ;
+    margin: 0 auto 30px;
+    display: flex;
   }
 }
 </style>

@@ -23,6 +23,6 @@ export function getUserPath(token) {
       return "/AdminDashboard/Users";
 
     default:
-      return "/"
+      return "/";
   }
 }

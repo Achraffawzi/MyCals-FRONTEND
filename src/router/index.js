@@ -30,7 +30,7 @@ import adminAccountSettings from "../views/Admin/accountSettings.vue";
 import AuthMailConfirmation from "../views/AuthMailConfirmation.vue";
 import ResetPassword from "../views/ResetPassword.vue";
 
-import {getUserPath} from '../globalFunctions.js'
+import { getUserPath } from "../globalFunctions.js";
 
 Vue.use(VueRouter);
 
@@ -41,77 +41,64 @@ const routes = [
     name: "Home",
     component: Home,
     beforeEnter: (to, from, next) => {
-      let l_t = localStorage.getItem('L_T');
-      if(l_t != null) {
-
+      let l_t = localStorage.getItem("L_T");
+      if (l_t != null) {
         let path = getUserPath(l_t);
 
-
-        next({ path: path })
-
-      }
-      else next();
+        next({ path: path });
+      } else next();
     },
     meta: {
       isSecured: false,
-    }
+    },
   },
   {
     path: "/about",
     name: "About",
     component: About,
     beforeEnter: (to, from, next) => {
-      let l_t = localStorage.getItem('L_T');
-      if(l_t != null) {
-
+      let l_t = localStorage.getItem("L_T");
+      if (l_t != null) {
         let path = getUserPath(l_t);
 
-        next({ path: path })
-
-      }
-      else next();
+        next({ path: path });
+      } else next();
     },
     meta: {
       isSecured: false,
-    }
+    },
   },
   {
     path: "/login",
     name: "Login",
     component: Login,
     beforeEnter: (to, from, next) => {
-      let l_t = localStorage.getItem('L_T');
-      if(l_t != null) {
-
+      let l_t = localStorage.getItem("L_T");
+      if (l_t != null) {
         let path = getUserPath(l_t);
 
-        next({ path: path })
-
-      }
-      else next();
+        next({ path: path });
+      } else next();
     },
     meta: {
       isSecured: false,
-    }
+    },
   },
   {
     path: "/signup",
     name: "Signup",
     component: Signup,
     beforeEnter: (to, from, next) => {
-      let l_t = localStorage.getItem('L_T');
-      if(l_t != null) {
-
+      let l_t = localStorage.getItem("L_T");
+      if (l_t != null) {
         let path = getUserPath(l_t);
 
-        next({ path: path })
-
-      }
-      else next();
+        next({ path: path });
+      } else next();
     },
     meta: {
       isSecured: false,
-    }
+    },
   },
   {
     path: "/unauthorized",
@@ -134,12 +121,12 @@ const routes = [
         component: Meals,
         meta: {
           isSecured: true,
-        }
+        },
       },
     ],
     meta: {
       isSecured: true,
-    }
+    },
   },
   {
     path: "/userSettings",
@@ -152,7 +139,7 @@ const routes = [
         component: userProfileSettings,
         meta: {
           isSecured: true,
-        }
+        },
       },
       {
         path: "userAccountSettings",
@@ -160,12 +147,12 @@ const routes = [
         component: userAccountSettings,
         meta: {
           isSecured: true,
-        }
-      }
+        },
+      },
     ],
     meta: {
       isSecured: true,
-    }
+    },
   },
 
   // Manager route
@@ -175,7 +162,7 @@ const routes = [
     component: managerDashboard,
     meta: {
       isSecured: true,
-    }
+    },
   },
   {
     path: "/managerSettings",
@@ -197,11 +184,11 @@ const routes = [
         meta: {
           isSecured: true,
         },
-      }
+      },
     ],
     meta: {
       isSecured: true,
-    }
+    },
   },
 
   // Admin routes
@@ -216,7 +203,7 @@ const routes = [
         component: Users,
         meta: {
           isSecured: true,
-        }
+        },
       },
       {
         name: "AdminDashboardManagers",
@@ -224,12 +211,12 @@ const routes = [
         component: Managers,
         meta: {
           isSecured: true,
-        }
+        },
       },
     ],
     meta: {
       isSecured: true,
-    }
+    },
   },
   {
     path: "/adminSettings",
@@ -242,7 +229,7 @@ const routes = [
         component: adminProfileSettings,
         meta: {
           isSecured: true,
-        }
+        },
       },
       {
         path: "adminAccountSettings",
@@ -250,27 +237,27 @@ const routes = [
         component: adminAccountSettings,
         meta: {
           isSecured: true,
-        }
-      }
+        },
+      },
     ],
     meta: {
       isSecured: true,
-    }
+    },
   },
 
   // Confirmation routes
   {
     path: "/authemailconfirmation",
     name: "authemailconfirmation",
-    component: AuthMailConfirmation
+    component: AuthMailConfirmation,
   },
 
   // Reset Password
   {
     path: "/resetpassword",
     name: "ResetPassword",
-    component: ResetPassword
-  }
+    component: ResetPassword,
+  },
 ];
 
 const router = new VueRouter({
@@ -280,18 +267,18 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  let token = localStorage.getItem("L_T");
 
-  let token = localStorage.getItem('L_T');
-
-  if(to.meta.isSecured && to.path !== from.path) {
-    if(token != null && (to.path === getUserPath(token) || to.meta.isSecured )) {
+  if (to.meta.isSecured && to.path !== from.path) {
+    if (
+      token != null &&
+      (to.path === getUserPath(token) || to.meta.isSecured)
+    ) {
       next();
     } else {
       next({ name: "unauthorized" });
     }
-  }
-  else next();
-
+  } else next();
 });
 
 export default router;

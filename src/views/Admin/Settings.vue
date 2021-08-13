@@ -15,8 +15,9 @@
             :key="index"
             :to="item.route"
             class="ma-3"
-          >{{ item.title }}</router-link>
-          <span style="cursor: pointer;" @click="handleSignout">Sign out</span>
+            >{{ item.title }}</router-link
+          >
+          <span style="cursor: pointer" @click="handleSignout">Sign out</span>
         </div>
       </v-container>
     </div>
@@ -59,9 +60,7 @@ export default {
       // userAvatarSrc: "",
       // userNameAvatar: "",
 
-      accountRouteObj: [
-        { title: "dashboard", route: "/AdminDashboard/Users" }
-      ],
+      accountRouteObj: [{ title: "dashboard", route: "/AdminDashboard/Users" }],
 
       // Bindings for the app bar component
       drawer: false,
@@ -72,13 +71,13 @@ export default {
           icon: "badge",
           title: "Profile Settings",
           route: "/adminSettings/adminProfileSettings",
-          description: "Manage and Edit your profile information"
+          description: "Manage and Edit your profile information",
         },
         {
           icon: "admin_panel_settings",
           title: "Account Settings",
           route: "/adminSettings/adminAccountSettings",
-          description: "change your account password"
+          description: "change your account password",
         },
       ],
     };

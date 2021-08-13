@@ -2,7 +2,13 @@
   <div class="why-component">
     <v-container>
       <v-row wrap>
-        <v-col v-for="reason in reasons" :key="reason.title" cols="12" sm="12" md="4">
+        <v-col
+          v-for="reason in reasons"
+          :key="reason.title"
+          cols="12"
+          sm="12"
+          md="4"
+        >
           <div id="hexagon" class="primary white--text">
             <v-icon class="white--text" large>{{ reason.icon }}</v-icon>
           </div>

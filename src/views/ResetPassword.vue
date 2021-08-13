@@ -119,7 +119,8 @@ export default {
           .catch((error) => console.log(error));
       } else {
         this.snackbarResetPassword = true;
-        this.errorMessage = "Operation failed! please double check the passwords";
+        this.errorMessage =
+          "Operation failed! please double check the passwords";
       }
 
       this.loading = false;

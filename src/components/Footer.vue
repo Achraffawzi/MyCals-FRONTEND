@@ -23,9 +23,9 @@
           <h2 class="font-weight-bold mb-3">About MyCals</h2>
           <p class="font-weight-light">
             Welcome to MyCals, your number one source for all things nutrition.
-        We're dedicated to providing you the very best of our services that will
-        help you achieve your goals, with an emphasis on learning, tracking and
-        improving your nutrition and eating habits.
+            We're dedicated to providing you the very best of our services that
+            will help you achieve your goals, with an emphasis on learning,
+            tracking and improving your nutrition and eating habits.
           </p>
         </v-col>
       </v-row>
