@@ -1,7 +1,23 @@
 <template>
   <div class="profile-settings mt-xm-0 mt-md-16">
+    <!-- Success on update operation -->
+      <v-snackbar v-model="snackbar" top>
+        {{ snackbarMessage }}
+
+        <template v-slot:action="{ attrs }">
+          <v-btn
+            class="white--text"
+            text
+            v-bind="attrs"
+            @click="snackbar = false"
+          >
+            Close
+          </v-btn>
+        </template>
+      </v-snackbar>
     <h5 class="text-h4 font-weight-bold mb-5">Account</h5>
-    <div>
+    <v-form ref="formUpdate">
+      <div>
       <div class="d-flex justify-space-between align-center py-4">
         <div class="d-flex flex-column align-start justify-center">
           <!-- current logged in User avatar -->
@@ -50,6 +66,7 @@
           <v-text-field
             v-model="profileInfo.firstName"
             :disabled="!isFirstnameChanging"
+            :rules="nameRule"
           >
           </v-text-field>
         </div>
@@ -70,6 +87,7 @@
           <v-text-field
             v-model="profileInfo.lastName"
             :disabled="!isLastnameChanging"
+            :rules="nameRule"
           >
           </v-text-field>
         </div>
@@ -129,6 +147,7 @@
               v-model="profileInfo.date_Of_Birth"
               no-title
               scrollable
+              :rules="dateRule"
             >
               <v-spacer></v-spacer>
               <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
@@ -155,30 +174,10 @@
     <div>
       <div class="d-flex justify-space-between align-center py-4">
         <div class="d-flex flex-column align-start justify-center">
-          <span class="font-weight-bold">Email</span>
-          <v-text-field
-            v-model="profileInfo.email"
-            :disabled="!isEmailChanging"
-          >
-          </v-text-field>
-        </div>
-        <v-btn
-          outlined
-          color="primary"
-          @click="isEmailChanging = !isEmailChanging"
-          >{{ changeButtonValue(isEmailChanging) }}</v-btn
-        >
-      </div>
-    </div>
-    <v-divider></v-divider>
-
-    <div>
-      <div class="d-flex justify-space-between align-center py-4">
-        <div class="d-flex flex-column align-start justify-center">
           <span class="font-weight-bold">Weight</span>
           <v-text-field
             v-model="profileInfo.weight"
-            :disabled="!isEmailChanging"
+            :disabled="!isWeightChanging"
             :rules="numberRule"
           >
           </v-text-field>
@@ -200,6 +199,7 @@
           <v-text-field
             v-model="profileInfo.height"
             :disabled="!isHeightChanging"
+            :rules="numberRule"
           >
           </v-text-field>
         </div>
@@ -220,6 +220,7 @@
           <v-text-field
             v-model="profileInfo.calories_goal"
             :disabled="!isCaloriesChanging"
+            :rules="numberRule"
           >
           </v-text-field>
         </div>
@@ -233,31 +234,27 @@
     </div>
     <v-divider></v-divider>
 
-    <v-btn @click="handleEditProfile" class="white--text primary" text
+    <v-btn @click="handleEditProfile" :loading="loadingUpdate" class="white--text primary" text
       >Save changes</v-btn
     >
+    </v-form>
   </div>
 </template>
 
 <script>
-
 import { END_POINTS, createApiEndPoints, IMAGE_URL } from "@/api.js";
 export default {
   name: "userProfileSettings",
 
   data() {
     return {
-      profileInfo: {
-        pictureUser: "",
-        firstName: "",
-        lastName: "",
-        gender: "",
-        date_Of_Birth: "",
-        email: "",
-        weight: 0,
-        height: 0,
-        calories_goal: 0,
-      },
+
+      snackbar: false,
+      snackbarMessage: "",
+
+      profileInfo: null,
+
+      file: null,
 
       userAvatarSrc: "",
       userNameAvatar: "",
@@ -266,7 +263,7 @@ export default {
       isLastnameChanging: false,
       isGenderChanging: false,
       isDobChanging: false,
-      isEmailChanging: false,
+      // isEmailChanging: false,
       isWeightChanging: false,
       isHeightChanging: false,
       isCaloriesChanging: false,
@@ -279,7 +276,17 @@ export default {
       menu: false,
       modal: false,
 
+      // Rules
+      nameRule: [
+        (name) =>
+          (name.length > 0 && isNaN(name)) ||
+          "This field is required and must be alphabetic",
+      ],
+      dateRule: [(date) => date.length > 0 || "Date of birth is required"],
       numberRule: [(value) => !isNaN(value) || "Value must be numeric"],
+
+      loader: null,
+      loadingUpdate: false,
     };
   },
 
@@ -289,10 +296,11 @@ export default {
       .fetch()
       .then((response) => {
         //   response.data.date_Of_Birth = response.data.date_Of_Birth.split('T')[0];
-        this.profileInfo = {
-          ...response.data,
-          date_Of_Birth: response.data.date_Of_Birth.split("T")[0],
-        };
+        this.profileInfo = { ...response.data };
+
+        this.profileInfo.date_Of_Birth =
+          response.data.date_Of_Birth.split("T")[0];
+        this.profileInfo.calories_goal = response.data.calories_Goal;
 
         // Set the user avatar
         if (response.data.pictureUser != null) {
@@ -310,27 +318,37 @@ export default {
     // this.getUserAvatar(); // Get the user avatar
   },
 
+  watch: {
+      loader () {
+        const l = this.loader
+        this[l] = !this[l]
+
+        setTimeout(() => (this[l] = false), 3000)
+
+        this.loader = null
+      },
+    },
+
   methods: {
     setAvatar(event) {
-      let file = event.target.files[0];
+      this.file = event.target.files[0];
       let reader = new FileReader();
 
       // If User Select File
-      if (file) {
-        reader.readAsDataURL(file);
+      if (this.file) {
+        reader.readAsDataURL(this.file);
       }
 
       // Set src attribut of Image Tag
       let imgSrc = this.userAvatarSrc;
-        console.log("this.userAvatarSrc : " + this.userAvatarSrc);
-        let avatarSpan = document.querySelector("#avatar-span");
-        let avatarText = document.querySelector("#avatar-text");
-        let actualAvatar = document.querySelector("#actualAvatar");
-        console.log("avatarSpan" + avatarSpan);
-        console.log("avatartext" + avatarText);
+      let file = this.file;
+      let avatarSpan = document.querySelector("#avatar-span");
+      let avatarText = document.querySelector("#avatar-text");
+      let actualAvatar = document.querySelector("#actualAvatar");
+
       reader.addEventListener("load", function () {
-        if (imgSrc == null && file) {
-          console.log("imgsrc " + imgSrc);
+        // If the old photo is just the default one and then the user selected a new picture
+        if (imgSrc == null && file != null) {
           console.log("if");
           avatarSpan.style.display = "none";
           let newAvatar = document.createElement("img");
@@ -340,16 +358,23 @@ export default {
 
           this.profileInfo.pictureUser = reader.result;
           this.userAvatarSrc = reader.result;
-        } else {
-          console.log("else" + reader.result);
           imgSrc = reader.result;
-          // this.userAvatarSrc = reader.result;
+        }
+        // if the old photo is NOT the default and the user changed it
+        else if (imgSrc != null && file != null) {
+          console.log("else");
+          this.userAvatarSrc = reader.result;
+          imgSrc = reader.result;
           actualAvatar.setAttribute("src", reader.result);
+        } else {
+          console.log("else test");
+          console.log(imgSrc);
+          console.log(file);
         }
       });
-      
-      this.userAvatarSrc = imgSrc;
 
+      this.userAvatarSrc = imgSrc;
+      // this.file = file;
       //   reader.readAsDataURL(file);
     },
 
@@ -362,25 +387,36 @@ export default {
     },
 
     handleEditProfile() {
-      let requestBody = {
-        file: this.profileInfo.pictureUser,
-        FirstName: this.profileInfo.firstName,
-        LastName: this.profileInfo.lastName,
-        Gender: this.profileInfo.gender,
-        Email: this.profileInfo.email,
-        Date_Of_Birth: this.profileInfo.date_Of_Birth,
-      };
-      createApiEndPoints(END_POINTS.EDIT_PROFILE)
-        .update({ ...requestBody })
-        .then((response) => console.log(response))
-        .catch((error) => console.log(error));
+      this.loadingUpdate= true;
+      if (this.$refs.formUpdate.validate()) {
+        let formData = new FormData();
+        formData.append("file", this.file);
+        formData.append("FirstName", this.profileInfo.firstName);
+        formData.append("LastName", this.profileInfo.lastName);
+        formData.append("Gender", this.profileInfo.gender);
+        formData.append("Date_Of_Birth", this.profileInfo.date_Of_Birth);
+        formData.append("Weight", this.profileInfo.weight);
+        formData.append("Height", this.profileInfo.height);
+        formData.append("Calories_Goal", this.profileInfo.calories_goal);
+
+        createApiEndPoints(END_POINTS.EDIT_PROFILE)
+          .update(formData)
+          .then((response) => {
+            this.snackbar = true;
+            this.snackbarMessage = response.data
+            setTimeout(() => {
+              location.reload();
+            }, 1500);
+          })
+          .catch((error) => console.log(error));
+      } else {
+        // error snackbar
+        this.snackbar = true;
+        this.snackbarMessage = "Please verify your information";
+      }
+
+      this.loadingUpdate = false;
     },
   },
 };
 </script>
-
-<style lang="scss" scoped>
-input {
-  color: red !important;
-}
-</style>

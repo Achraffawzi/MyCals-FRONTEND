@@ -2,7 +2,7 @@
   <div class="meals">
     <v-container>
       <!-- Success on add/edit operation -->
-      <v-snackbar v-model="snackbarSuccess">
+      <v-snackbar v-model="snackbarSuccess" top>
         {{ snackbarSuccessMessage }}
 
         <template v-slot:action="{ attrs }">
